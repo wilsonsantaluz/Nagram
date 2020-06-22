@@ -1,0 +1,110 @@
+
+div#contentdiv {
+  margin: 0px 15px 0px 15px;
+}
+#user_card {
+			height: 400px;			
+            margin: auto;
+            width: 50%;            
+			margin-top: auto;
+			margin-bottom: auto;
+			background: #f39c12;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+}
+
+p.maintitle {
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 30px;
+}
+input.loginField {
+  border: 1px solid #949EA7;
+}
+div.errorMsg {
+  color: #ff0000;
+  font-style:italic;
+}
+div.loginFieldDiv {
+  font-weight: bold;
+}
+div.logindiv {
+  border: 0px ;
+  background-color: #CCF0FF;
+  margin: 30px;
+  padding: 15px;
+  padding-bottom: 0px;
+  width: 300px;
+}
+table.authtable {
+  border: 0px;
+  font-weight: bold;
+}
+
+
+#framecontent {
+
+}
+div#resultWrapper {
+  margin: 15px;
+  visibility:hidden;
+}
+table.resultTable {
+ 
+}
+td.resultLabel {
+
+}
+div.classDiv {
+  border: 1px solid #949EA7;
+  background-color: white;
+  padding: 0px 0px 10px 0px;
+}
+div.classHeading {
+  padding: 3px 3px 3px 3px;
+  background-color: #eee
+}
+div.methodHeading {
+  margin-left: 20px;
+  margin-bottom: 5px;
+  vertical-align:middle;
+}
+div.paramDiv {
+  padding: 0px 0px 0px 50px;
+}
+a.simple {
+  border: 0px;
+}
+img {
+  border: 0;
+}
+
+
+.paramTableHeader td {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.executeForm button {
+  text-align: right;
+}
+td.thin {
+  width: 1px;
+}
+input.long {
+  width: 80%;
+}
+div.executeButtonDiv {
+  text-align: right;
+  padding: 5px;
+}
+

@@ -1,0 +1,87 @@
+
+CREATE TABLE insta_hashtag (
+  insta_hashtag_uuid UUID DEFAULT uuid_generate_v4(),
+  hashtag_name VARCHAR(250)  NOT NULL,
+  hashtag_date TIMESTAMP DEFAULT NULL, 
+ CONSTRAINT insta_hashtag_pkey PRIMARY KEY(insta_hashtag_uuid)
+) ;
+
+CREATE TABLE insta_user (
+  insta_user_uuid UUID DEFAULT uuid_generate_v4(),
+  insta_user_name VARCHAR(250),  
+  insta_user_date TIMESTAMP DEFAULT NULL,
+  insta_user_last_visit TIMESTAMP DEFAULT NULL,
+  insta_user_date_follow TIMESTAMP DEFAULT NULL,
+  insta_user_bio VARCHAR(1000),
+  insta_user_following INTEGER,
+  insta_user_followings INTEGER, 
+  insta_user_posts INTEGER,   
+  CONSTRAINT insta_user_pkey PRIMARY KEY(insta_user_uuid)
+) ;
+
+
+CREATE TABLE insta_comments (
+  insta_comment_uuid UUID DEFAULT uuid_generate_v4(),
+  insta_comment_id INTEGER NOT NULL,
+  insta_comment_text VARCHAR(5000) NOT NULL,  
+  insta_comment_date TIMESTAMP DEFAULT NULL,
+  CONSTRAINT insta_comment_pkey PRIMARY KEY(insta_comment_uuid)
+ 
+) ;
+
+CREATE TABLE insta_action (
+  insta_action_uuid UUID DEFAULT uuid_generate_v4(),
+  insta_action_type INTEGER,
+  insta_action_date TIMESTAMP DEFAULT NULL,
+  insta_action_comment VARCHAR(1000) DEFAULT NULL,
+  insta_action_insta_user_id integer,
+ CONSTRAINT insta_action_pkey PRIMARY KEY(insta_action_uuid)
+) ;
+
+
+
+
+CREATE TABLE person (
+  person_uuid UUID DEFAULT uuid_generate_v4(),
+  
+  person_name VARCHAR(250) DEFAULT NULL,
+  person_type INTEGER DEFAULT NULL,
+  person_date TIMESTAMP DEFAULT NULL,
+  person_password VARCHAR(50) DEFAULT NULL,
+  person_login CHAR(20) DEFAULT NULL,
+  person_insta_user CHAR(50) DEFAULT NULL,
+  person_insta_password CHAR(50) DEFAULT NULL,
+  person_mail VARCHAR(255) DEFAULT NULL,
+  person_ip VARCHAR(50) DEFAULT NULL,
+  person_country VARCHAR(50) DEFAULT NULL,
+  person_fone VARCHAR(50) DEFAULT NULL,
+  person_age INTEGER DEFAULT NULL,
+  person_adress VARCHAR(255) DEFAULT NULL,
+  person_initial_latitude double,  
+  person_initial_longitude double,
+  person_last_latitude double,  
+  person_last_longitude double,  
+  person_last_alive datetime, 
+  person_expire_date datetime,  
+  person_license_type integer, 
+  CONSTRAINT person_pkey PRIMARY KEY(person_uuid)
+) ;
+
+
+CREATE TABLE insta_hashtag_insta_user (
+  
+  insta_user_id  INTEGER  NOT NULL ,
+  insta_hashtag_id integer NOT NULL,
+  insta_hashtag_insta_user_date TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (insta_user_id,insta_hashtag_id )
+);
+
+
+CREATE TABLE insta_action_insta_user(
+  insta_user_id INTEGER NOT NULL ,
+  insta_action_id INTEGER  NOT NULL,
+  insta_action_insta_user_date TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (insta_user_id,insta_action_id)
+) ;
+
+

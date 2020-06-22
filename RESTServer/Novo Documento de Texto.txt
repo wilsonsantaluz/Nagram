@@ -1,0 +1,9 @@
+209.239.112.15
+root
+gvqhexAk4KDeSt5
+//---------------------------------------------------------------
+comandos
+  ps aux | grep -i 'NagramRestServer'
+  kill  -9
+  nohup ./NagramRestServer > /dev/null &
+//---------------------------------------------------------------

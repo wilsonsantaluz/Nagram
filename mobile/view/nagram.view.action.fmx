@@ -1,0 +1,414 @@
+object fviewAction: TfviewAction
+  Left = 0
+  Top = 0
+  Caption = 'Info a'#231#227'o'
+  ClientHeight = 630
+  ClientWidth = 299
+  StyleBook = fmain.mainthema
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 3
+  object ToolBar1: TToolBar
+    Size.Width = 299.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Label1: TLabel
+      Align = Contents
+      StyledSettings = [Size, Style, FontColor]
+      Size.Width = 299.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.FontColor = xFFF9A61A
+      TextSettings.HorzAlign = Center
+      Text = 'Informa'#231#245'es da a'#231#227'o'
+      TabOrder = 0
+    end
+    object btclose: TSpeedButton
+      Align = Left
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'priortoolbutton'
+      Text = 'Fechar'
+      OnClick = SpeedButton1Click
+    end
+  end
+  object ToolBar2: TToolBar
+    Align = Bottom
+    Position.Y = 582.000000000000000000
+    Size.Width = 299.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+  end
+  object FloatAnimation1: TFloatAnimation
+    Duration = 0.200000002980232200
+    StartValue = 0.000000000000000000
+    StopValue = 0.000000000000000000
+  end
+  object recbody: TRectangle
+    Align = Client
+    Fill.Color = x50E0E0E0
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Size.Width = 279.000000000000000000
+    Size.Height = 514.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Color = claWhite
+    XRadius = 10.000000000000000000
+    YRadius = 10.000000000000000000
+    object lstdadosgerais: TListBox
+      Align = Contents
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 269.000000000000000000
+      Size.Height = 504.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'transparentlistboxstyle'
+      TabOrder = 0
+      DisableFocusEffect = True
+      ItemIndex = 0
+      DefaultItemStyles.ItemStyle = 'listboxitemnodetail'
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      GroupingKind = Grouped
+      Viewport.Width = 269.000000000000000000
+      Viewport.Height = 504.000000000000000000
+      object AccountInfo: TListBoxGroupHeader
+        HitTest = True
+        IsSelected = True
+        ItemData.Bitmap.PNG = {
+          89504E470D0A1A0A0000000D49484452000000200000001D0806000000CB9E6E
+          87000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+          049349444154484BED955F681C451CC7BF3BB3B37B7BDB642F9736D5E2256D45
+          EB8356FC83BE586930A03EF9A754457CA85208F8A75644FAD087F8A2B48814AB
+          56A8083668515BAAE083FF694B6A9152AA2DAD5A92B4F967AEF977B777B9BDBD
+          DBDDD9712E5D9F122F7B25E08B9F651818E63BF39DD9DF6F7EF8AF51A23E1647
+          B3DB6E0D50EEF485DB02511D14DC3FE764B4DF9F500EF1684AC3C436703CFFCA
+          266E573FE7668506DC8527CAE06145B6608285CA570AAABB1F59DD77399A1E1B
+          12F58BC242E3056A2528210C94E860B21125014DD156AA6A73372DEB035F0E6C
+          7CF78BC12E2B92C422B60170DAA691E6B9CD29D140150D4C36280421AAA0569A
+          2C4BAE7D5109D96FBD173B6F8F548B12DB804BEC5F57B2BB60D036B9279B3B3D
+          252A084D480302D5308F0A9F4222915CCDC2F2B14F2E747644D2BAC436D0A49A
+          07C60B1784A95C0F4B5D032237A7449A5064AFE8D20491264A708309080DA900
+          F6EB91B42EB10DDC93DAF5A399348E4C55CF60DA3D071128109C4085218D30A8
+          F2771042AF8635F141556A5E55D6277E0C48C69D937F087038FE24C60BA7D13F
+          7212E7FF3C83C1C1314C5C2962D6E62815420CF5177C2FB7ECED485697D86978
+          54F4A864CA1ED0F574C795D269CCE48731335390AD043BEF62B65C455237A125
+          F45C4AB3B6BCF9D4C0D791B42EB16FA0387CF6A1667D4D070F5C10C1C139879D
+          7351B02B08028EE5E60D87D389EB9E5F9BEA5A1777F31A756FE084BDF3C60452
+          0F06E1EC1D456F68C32AF3FE75E3EECFB0DD4B18191945FFC549148A0E5A53E9
+          F3EF3D3BB35E9161114963B3E00D7C977DC63C3EF5EA474D65EBA2C956BD2FF3
+          7F6B93D6BEAEC227E1F9362A95120AF932CA654FA69D018335EDBF96CD6B2C68
+          20E0D5DEA4B6FCB996F4DD34A5AE8546D272A28652300E2F74502C4A0385DAD5
+          07482ACD5EA6F596CF2269C3CC33F0CDD063773235F9788ADD04210214FDCB32
+          B727917346902F8DA1EAD74EEFA254F2A06B26040BB50B23E7B644F286996780
+          2996D9AC75C893DAB0FD7E148361B87C02819243D1B982EC701EF694878AEB43
+          84C0F45F6514B3B9DD3B0EDC7C5FB44443CC33F040FBC7274CDAF193276631CB
+          4765CE8FC309B2F045012CC1A199219841906426CAB62FA398C06CB19499EAC4
+          CE6889869867A0164C65F43FA9876D6745C8E1CA37DEE34EADECCEB5507E2C11
+          C2488548C80717A68B96F40AF82CE8DAF5C3E6862A618D0583F05E6BD7CC4478
+          6A23427258118A7CFB64DD17B5A0F36516F8F0655F33A3500155E320CCC33246
+          55373F64444BC4664103353A5BDEB137ACD8BD59F87C93E0C66522D8DCE31348
+          03010F659337227B4215F8F28684A37B196DA313C963F3AF06FEE1E1CCC1237D
+          7B337DC73EA51E15569F0A35A032250974A8B21AEA545642E12165357FB0F5D1
+          B76623596C16AD057BF6EC494D4D4F5F1A1B1D3DDADBDBBBE9C00FDBDAFBA7BF
+          5F5F70DDDB98B0D608B5329664E9536F3CFDCBB791A4211635B06FDFBEAE6C36
+          BBB3B5B5EDC3EDDB5F3A180D2F198BFE022261CC68330CED5034B4A4D435D0D3
+          D3437239BB4BD3D4BDDDDDDD7E34BCA4D43590C9644CDBCEB5EFD8F1DAFE6868
+          C9A96BC0711C8B52FAB2A228D754E9FE677180BF0143EFFF349B03D30A000000
+          0049454E44AE426082}
+        Size.Width = 229.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxgroupheader'
+        TabOrder = 0
+        Text = 'Info. a'#231#227'o'
+      end
+      object linameuser: TListBoxItem
+        Touch.InteractiveGestures = [TwoFingerTap, PressAndTap, LongTap]
+        TextSettings.Font.Family = '(Default)'
+        TextSettings.Font.Size = 11.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        HitTest = True
+        Position.Y = 30.000000000000000000
+        Size.Width = 229.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 1
+        object Label9: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 214.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          TextSettings.VertAlign = Leading
+          Text = 'Id.'
+          TabOrder = 1
+        end
+        object lblid: TLabel
+          Align = Bottom
+          Padding.Left = 10.000000000000000000
+          Padding.Top = 10.000000000000000000
+          Padding.Right = 10.000000000000000000
+          Padding.Bottom = 10.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 225.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'labelstyle'
+          TextSettings.Font.Family = 'sans - serif - condensed'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.HorzAlign = Center
+          Text = '000001'
+          TabOrder = 0
+        end
+      end
+      object lidatacad: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 78.000000000000000000
+        Size.Width = 229.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 2
+        object Label10: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 214.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Data'
+          TabOrder = 1
+        end
+        object lbldata: TLabel
+          Align = Bottom
+          Padding.Left = 10.000000000000000000
+          Padding.Top = 10.000000000000000000
+          Padding.Right = 10.000000000000000000
+          Padding.Bottom = 10.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 225.000000000000000000
+          Size.Height = 28.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'labelstyle'
+          TextSettings.Font.Family = 'sans - serif - condensed'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.HorzAlign = Center
+          Text = '00/01/2000'
+          TabOrder = 5
+        end
+      end
+      object lilastview: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 132.000000000000000000
+        Size.Width = 229.000000000000000000
+        Size.Height = 49.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 3
+        object Label11: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 219.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Usu'#225'rio'
+          TabOrder = 1
+        end
+        object lblusuario: TLabel
+          Align = Bottom
+          Padding.Left = 10.000000000000000000
+          Padding.Top = 10.000000000000000000
+          Padding.Right = 10.000000000000000000
+          Padding.Bottom = 10.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 225.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'labelstyle'
+          TextSettings.Font.Family = 'sans - serif - condensed'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.HorzAlign = Center
+          Text = 'Nome usu'#225'rio'
+          TabOrder = 4
+        end
+      end
+      object licontainstagram: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 181.000000000000000000
+        Size.Width = 229.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        object Label12: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 214.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Tipo A'#231#227'o'
+          TabOrder = 1
+        end
+        object lbltipo: TLabel
+          Align = Bottom
+          Padding.Left = 10.000000000000000000
+          Padding.Top = 10.000000000000000000
+          Padding.Right = 10.000000000000000000
+          Padding.Bottom = 10.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 28.000000000000000000
+          Size.Width = 225.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'labelstyle'
+          TextSettings.Font.Family = 'sans - serif - condensed'
+          TextSettings.Font.Size = 13.000000000000000000
+          TextSettings.HorzAlign = Center
+          Text = 'Tipo ac'#227'o desc'
+          TabOrder = 4
+        end
+      end
+      object ListBoxItem1: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 235.000000000000000000
+        Size.Width = 229.000000000000000000
+        Size.Height = 110.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        object Label13: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 214.000000000000000000
+          Size.Height = 12.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Comentario'
+          TabOrder = 0
+        end
+        object memocomentario: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          ReadOnly = True
+          StyledSettings = [Size, Style, FontColor]
+          TextSettings.Font.Family = 'Roboto'
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Padding.Left = 10.000000000000000000
+          Padding.Top = 10.000000000000000000
+          Padding.Right = 10.000000000000000000
+          Padding.Bottom = 10.000000000000000000
+          Size.Width = 225.000000000000000000
+          Size.Height = 84.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 17
+          Viewport.Width = 225.000000000000000000
+          Viewport.Height = 84.000000000000000000
+        end
+      end
+      object ListBoxItem2: TListBoxItem
+        Position.Y = 345.000000000000000000
+        Size.Width = 229.000000000000000000
+        Size.Height = 105.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        object Label8: TLabel
+          Align = Top
+          StyledSettings = [Style, FontColor]
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 214.000000000000000000
+          Size.Height = 28.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          TextSettings.Font.Family = 'sans - serif - condensed'
+          TextSettings.Font.Size = 13.000000000000000000
+          Text = 'Url'
+          TabOrder = 0
+        end
+        object memourl: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          ReadOnly = True
+          StyledSettings = [Style, FontColor]
+          TextSettings.Font.Family = 'sans - serif - condensed'
+          TextSettings.Font.Size = 13.000000000000000000
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Padding.Left = 10.000000000000000000
+          Padding.Top = 10.000000000000000000
+          Padding.Right = 10.000000000000000000
+          Padding.Bottom = 10.000000000000000000
+          Size.Width = 225.000000000000000000
+          Size.Height = 63.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 17
+          Viewport.Width = 225.000000000000000000
+          Viewport.Height = 63.000000000000000000
+        end
+      end
+    end
+  end
+end

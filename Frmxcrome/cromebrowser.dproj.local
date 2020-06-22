@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/05/10 08:54:27.000.269,C:\desenv\CEF4Delphi\demos\Delphi_FMX\SimpleFMXBrowser\SimpleFMXBrowser.dproj=D:\WORK\Pelicam\Frmxcrome\cromebrowser.dproj</Transaction>
+    <Transaction>2020/05/10 08:56:06.000.586,C:\desenv\CEF4Delphi\demos\Delphi_FMX\SimpleFMXBrowser\uFMXApplicationService.pas=D:\WORK\Pelicam\Frmxcrome\service\uFMXApplicationService.pas</Transaction>
+    <Transaction>2020/05/10 08:56:29.000.304,C:\desenv\CEF4Delphi\demos\Delphi_FMX\SimpleFMXBrowser\uSimpleFMXBrowser.fmx=D:\WORK\Pelicam\Frmxcrome\view\uSimpleFMXBrowser.fmx</Transaction>
+    <Transaction>2020/05/10 08:56:29.000.304,C:\desenv\CEF4Delphi\demos\Delphi_FMX\SimpleFMXBrowser\uSimpleFMXBrowser.pas=D:\WORK\Pelicam\Frmxcrome\view\uSimpleFMXBrowser.pas</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,33 @@
+unit nagram.rest.model.commet;
+
+interface
+
+uses
+  System.SysUtils,
+  System.classes;
+
+type
+
+  TComment = class
+  private
+    Fid: integer;
+    Fuuid: string;
+    FText: string;
+    FPerson_uuid: string;
+    FDate: Tdatetime;
+  public
+    property id:integer read Fid write Fid;
+    property uuid: string read Fuuid write Fuuid;
+    property Person_uuid: string read FPerson_uuid write FPerson_uuid;
+    property Text: string read FText write FText;
+    property Date: Tdatetime read FDate write FDate;
+  end;
+
+type
+  TComments = array of TComment;
+
+implementation
+
+{ TBotAction }
+
+end.

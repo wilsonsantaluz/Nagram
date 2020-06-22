@@ -1,0 +1,64 @@
+unit nagram.rest.model.person;
+
+interface
+
+uses
+  System.SysUtils,
+  System.classes;
+
+type
+  Tperson = class
+  private
+    Fuuid: string;
+    Fname: string;
+    Ftype: Integer;
+    Fdate: TDateTime;
+    Fpassword: string;
+    Flogin: string;
+    Finsta_user:string;
+    Finsta_password: string;
+    Fmail: string;
+    Fip: string;
+    Fcountry: string;
+    Ffone: string;
+    Fage: integer;
+    Fadress: string;
+    Finitial_latitude: Double;
+    Finitial_longitude: Double;
+    Flast_latitude: Double;
+    Flast_longitude: Double;
+    Flast_alive: TDateTime;
+    Fexpire_date: TDateTime;
+    Flicense_type: Integer;
+
+  public
+
+    property uuid: string read Fuuid write Fuuid;
+    property name: string read Fname write Fname;
+    property atype: Integer read Ftype write Ftype;
+    property date: TDateTime read Fdate write Fdate;
+    property password: string read Fpassword write Fpassword;
+    property login: string read Flogin write Flogin;
+    property insta_user: string read Finsta_user write Finsta_user;
+    property insta_password: string read Finsta_password write Finsta_password;
+    property mail: string read Fmail write Fmail;
+    property ip: string read Fip write Fip;
+    property country: string read Fcountry write Fcountry;
+    property fone: string read Ffone write Ffone;
+    property age: integer read Fage write Fage;
+    property adress: string read Fadress write Fadress;
+    property initial_latitude: Double read Finitial_latitude
+      write Finitial_latitude;
+    property initial_longitude: Double read Finitial_longitude
+      write Finitial_longitude;
+    property last_latitude: Double read Flast_latitude write Flast_latitude;
+    property last_longitude: Double read Flast_longitude write Flast_longitude;
+    property last_alive: TDateTime read Flast_alive write Flast_alive;
+    property expire_date: TDateTime read Fexpire_date write Fexpire_date;
+    property license_type: Integer read Flicense_type write Flicense_type;
+
+  end;
+
+implementation
+
+end.

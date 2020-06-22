@@ -1,0 +1,83 @@
+object SimpleFMXBrowserFrm: TSimpleFMXBrowserFrm
+  Left = 0
+  Top = 0
+  Caption = 'Tbut'
+  ClientHeight = 600
+  ClientWidth = 917
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
+  OnResize = FormResize
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object AddressPnl: TPanel
+    Align = Top
+    Enabled = False
+    Padding.Left = 5.000000000000000000
+    Padding.Top = 5.000000000000000000
+    Padding.Right = 5.000000000000000000
+    Padding.Bottom = 5.000000000000000000
+    Size.Width = 917.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object AddressEdt: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 1
+      Text = 'https://instagram.com'
+      Size.Width = 871.000000000000000000
+      Size.Height = 31.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object GoBtn: TButton
+      Align = Right
+      PopupMenu = PopupMenu1
+      Position.X = 876.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 36.000000000000000000
+      Size.Height = 31.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = '...'
+      OnClick = GoBtnClick
+    end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 300
+    OnTimer = Timer1Timer
+    Left = 40
+    Top = 129
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 576
+    Top = 136
+    object MenuItem1: TMenuItem
+      Action = actscriptlogin
+      Enabled = True
+      ImageIndex = -1
+    end
+  end
+  object brs: TFMXChromium
+    OnBeforeContextMenu = brsBeforeContextMenu
+    OnContextMenuCommand = brsContextMenuCommand
+    OnBeforePopup = brsBeforePopup
+    OnAfterCreated = brsAfterCreated
+    OnBeforeClose = brsBeforeClose
+    OnClose = brsClose
+    Left = 40
+    Top = 65
+  end
+  object mainactions: TActionList
+    Left = 432
+    Top = 168
+    object actscriptlogin: TAction
+      Text = 'Script login'
+      OnExecute = actscriptloginExecute
+    end
+  end
+end

@@ -1,0 +1,66 @@
+unit nagram.rest.model.person;
+
+interface
+
+uses
+  System.SysUtils,
+  System.classes;
+
+type
+  Tperson = class
+  private
+    Fuuid: TGUID;
+    Fname: string;
+    Ftype: Integer;
+    Fdate: TDateTime;
+    Fpassword: string;
+    Flogin: string;
+    Finsta_user:string;
+    Finsta_password: string;
+    Fmail: string;
+    Fip: string;
+    Fcountry: string;
+    Ffone: string;
+    Fage: integer;
+    Fadress: string;
+    Finitial_latitude: Double;
+    Finitial_longitude: Double;
+    Flast_latitude: Double;
+    Flast_longitude: Double;
+    Flast_alive: TDateTime;
+    Fexpire_date: TDateTime;
+    Flicense_type: Integer;
+    Fbirth:TDateTime;
+
+  public
+
+    property person_uuid: TGUID read Fuuid write Fuuid;
+    property person_name: string read Fname write Fname;
+    property person_type: Integer read Ftype write Ftype;
+    property person_date: TDateTime read Fdate write Fdate;
+    property person_password: string read Fpassword write Fpassword;
+    property person_login: string read Flogin write Flogin;
+    property person_insta_user: string read Finsta_user write Finsta_user;
+    property person_insta_password: string read Finsta_password write Finsta_password;
+    property person_mail: string read Fmail write Fmail;
+    property person_ip: string read Fip write Fip;
+    property person_country: string read Fcountry write Fcountry;
+    property person_fone: string read Ffone write Ffone;
+    property person_age: integer read Fage write Fage;
+    property person_adress: string read Fadress write Fadress;
+    property person_initial_latitude: Double read Finitial_latitude
+      write Finitial_latitude;
+    property person_initial_longitude: Double read Finitial_longitude
+      write Finitial_longitude;
+    property person_last_latitude: Double read Flast_latitude write Flast_latitude;
+    property person_last_longitude: Double read Flast_longitude write Flast_longitude;
+    property person_last_alive: TDateTime read Flast_alive write Flast_alive;
+    property person_expire_date: TDateTime read Fexpire_date write Fexpire_date;
+    property person_license_type: Integer read Flicense_type write Flicense_type;
+    property person_date_birth:tdatetime  read Fbirth write Fbirth;
+
+  end;
+
+implementation
+
+end.

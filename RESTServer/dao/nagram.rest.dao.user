@@ -1,0 +1,318 @@
+unit nagram.rest.dao;
+
+interface
+
+uses
+  System.SysUtils,
+  System.Classes,
+  // FIREDAC
+  FireDAC.Stan.ExprFuncs,
+  FireDAC.Phys.SQLiteDef,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  uLkJSON,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.ODBC,
+  // FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param,
+  FireDAC.DatS,
+  FireDAC.DApt.Intf,
+  FireDAC.DApt,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
+  FireDAC.Phys.SQLite,
+  FireDAC.Phys.MSSQL,
+  FireDAC.Phys.MSSQLDef,
+
+  System.JSON,
+  variants,
+  Datasnap.Provider,
+  {FIREDAC---------------------------------------------------------------}
+
+  Datasnap.DBClient;
+
+type
+  TDaoUser = class
+
+  private
+    { Private declarations }
+
+  public
+    { Public declarations }
+
+    class function getuser(value: string): string;
+    class function insertuser(value: string): string;
+    class function deleteuser(value: string): string;
+    class function updateuser(value: string): string;
+  end;
+
+implementation
+
+uses
+  nagram.rest.util;
+
+{ TDaouser }
+
+{ ---------------------------------------------------------------------------- }
+procedure setConnection(pcon: TFDConnection);
+begin
+  pcon.ConnectionDefName := 'NAGRAM_CNT';
+end;
+
+class function TDaouser.deleteuser(value: string): string;
+var
+  aupd: TJSONObject;
+var
+  con: TFDConnection;
+  qry: TFDQuery;
+begin
+  aupd := TJSONObject.ParseJSONValue(value) as TJSONObject;
+  if not Assigned(aupd.FindValue('insta_user_uuid')) then
+    raise Exception.Create('UUID deve ser informado!');
+  con := TFDConnection.Create(Nil);
+  qry := TFDQuery.Create(Nil);
+  try
+    qry.Connection := con;
+    setConnection(con);
+    with qry.SQL do
+    begin
+      add('  DELETE FROM insta_user');
+      add('  WHERE   ');
+      add('     insta_user_uuid  =   ' +
+        aupd.FindValue('insta_user_uuid').value);
+    end;
+    qry.ExecSQL;
+    if qry.RowsAffected > 0 then
+      result := '{"codretorno":"200","msgretorno":"user Sucessful deleted"}'
+    else
+      result := '{"codretorno":"400","msgretorno":" ' +
+        aupd.FindValue('insta_user_uuid').value + 'Uuid not found }"';
+  finally
+    qry.Close;
+    FreeAndNil(qry);
+    FreeAndNil(con);
+  end;
+end;
+
+class function TDaouser.getuser(value: string): string;
+var
+  con: TFDConnection;
+  qry: TFDQuery;
+  cds: TClientDataSet;
+  prv: TDataSetProvider;
+  aupd: TJSONObject;
+  ouuid: string;
+  sguid: TGUID;
+begin
+  aupd := TJSONObject.ParseJSONValue(value) as TJSONObject;
+  con := TFDConnection.Create(Nil);
+  qry := TFDQuery.Create(Nil);
+  cds := TClientDataSet.Create(nil);
+  prv := TDataSetProvider.Create(Nil);
+  if Assigned(aupd.FindValue('insta_user_person_uuid')) then
+  begin
+    ouuid := aupd.FindValue('insta_user_person_uuid').value;
+    if pos('{', ouuid) <= 0 then
+      ouuid := '{' + ouuid + '}';
+
+  end;
+
+  try
+    qry.Connection := con;
+    setConnection(con);
+    qry.SQL.add('SELECT  * FROM insta_user  ');
+    qry.SQL.add('WHERE insta_user_UUID IS NOT NULl  ');
+    if ouuid <> ''then
+    qry.SQL.Add('  AND insta_user_person_uuid =:insta_user_person_uuid' ) ;
+    if Assigned(aupd.FindValue('custom_where')) then
+    begin
+      qry.SQL.add(' AND (' + aupd.FindValue('custom_where').value + ')');
+    end
+    else
+    begin
+      if Assigned(aupd.FindValue('insta_user_comment')) then
+        qry.SQL.add(' AND  insta_user_comment' +
+          QuotedStr('%' + aupd.FindValue('insta_user_comment').value + '%'));
+
+      if Assigned(aupd.FindValue('insta_user_type')) then
+        qry.SQL.add(' AND  insta_user_type = ' +
+          aupd.FindValue('insta_user_type').value);
+
+      if Assigned(aupd.FindValue('insta_user_date')) then
+        qry.SQL.add(' AND  insta_user_date = ' +
+          QuotedStr(aupd.FindValue('insta_user_date').value));
+
+      if ouuid <> '' then
+        qry. ParamByName('insta_user_person_uuid').AsGUID:=StringToGUID(ouuid);
+
+      if Assigned(aupd.FindValue('insta_user_insta_user_name')) then
+
+        qry.SQL.add(' AND  insta_user_insta_user_name = ' +
+          QuotedStr(aupd.FindValue('insta_user_insta_user_name').value));
+
+    end;
+
+    prv.DataSet := qry;
+    cds.SetProvider(prv);
+
+    cds.Open;
+    result := makeJason(cds);
+  finally
+    qry.Close;
+    FreeAndNil(cds);
+    FreeAndNil(qry);
+    FreeAndNil(prv);
+    FreeAndNil(con);
+  end;
+end;
+
+class function TDaouser.insertuser(value: string): string;
+var
+  aupd: TJSONObject;
+var
+  con: TFDConnection;
+  qry: TFDQuery;
+  ouuid: string;
+begin
+  aupd := TJSONObject.ParseJSONValue(value) as TJSONObject;
+  if not Assigned(aupd.FindValue('insta_user_type')) then
+    raise Exception.Create('type is required!');
+
+  if not Assigned(aupd.FindValue('insta_user_person_uuid')) then
+    raise Exception.Create('Uiid for person is reguired!');
+
+  if not Assigned(aupd.FindValue('insta_user_insta_user_name')) then
+    raise Exception.Create('Name user is reguired!');
+
+  ouuid := aupd.FindValue('insta_user_person_uuid').value;
+  if pos('{', ouuid) <= 0 then
+    ouuid := '{' + ouuid + '}';
+
+  con := TFDConnection.Create(Nil);
+  qry := TFDQuery.Create(Nil);
+  try
+    qry.Connection := con;
+    setConnection(con);
+    with qry.SQL do
+    begin
+
+      add('INSERT INTO                            ');
+      add('  insta_user                         ');
+      add('(                                      ');
+
+      add('  insta_user_type,                   ');
+      add('  insta_user_date,                   ');
+      add('  insta_user_comment,                ');
+      add('  insta_user_person_uuid,            ');
+      add('  insta_user_insta_user_name         ');
+      add(')                                      ');
+      add('VALUES (                               ');
+
+      add('  :insta_user_type,                  ');
+      add('  :insta_user_date,                  ');
+      add('  :insta_user_comment,               ');
+      add('  :insta_user_person_uuid,           ');
+      add('  :insta_user_insta_user_name        ');
+      add(');                                     ');
+
+    end;
+
+    qry.ParamByName('insta_user_type').AsInteger :=
+      strtoint(aupd.FindValue('insta_user_type').value);
+
+    qry.ParamByName('insta_user_date').AsDateTime := now;
+
+    if not Assigned(aupd.FindValue('insta_user_comment')) then
+
+      qry.ParamByName('insta_user_comment').AsString :=
+        QuotedStr(aupd.FindValue('insta_user_comment').value)
+    else
+      qry.ParamByName('insta_user_comment').AsString := '';
+
+    qry.ParamByName('insta_user_person_uuid').AsGUID := StringToGUID(ouuid);
+
+    qry.ParamByName('insta_user_insta_user_name').AsString :=
+      QuotedStr(aupd.FindValue('insta_user_insta_user_name').value);
+
+    qry.ExecSQL;
+    result := '{"codretorno":"200","msgretorno":"user  Sucessfull adedd"}';
+  finally
+    qry.Close;
+    FreeAndNil(qry);
+    FreeAndNil(con);
+  end;
+end;
+
+class function TDaouser.updateuser(value: string): string;
+var
+  aupd: TJSONObject;
+var
+  con: TFDConnection;
+  qry: TFDQuery;
+  ouuid: string;
+begin
+  aupd := TJSONObject.ParseJSONValue(value) as TJSONObject;
+  if not Assigned(aupd.FindValue('insta_user_uuid')) then
+    raise Exception.Create('Uiid is required!');
+  ouuid := aupd.FindValue('insta_user_person_uuid').value;
+  if pos('{', ouuid) <= 0 then
+    ouuid := '{' + ouuid + '}';
+  con := TFDConnection.Create(Nil);
+  qry := TFDQuery.Create(Nil);
+  try
+    qry.Connection := con;
+    setConnection(con);
+    with qry.SQL do
+    begin
+      add('UPDATE                                            ');
+      add('  insta_user                                    ');
+      add('SET                                               ');
+      if Assigned(aupd.FindValue('insta_user_type')) then
+        add('  insta_user_type = :insta_user_type,         ');
+
+      if Assigned(aupd.FindValue('insta_user_comment')) then
+        add('  insta_user_comment = :insta_user_comment,   ');
+
+      if Assigned(aupd.FindValue('insta_user_person_uuid')) then
+        add('  insta_user_person_uuid = :insta_user_person_uuid,');
+
+      if Assigned(aupd.FindValue('insta_user_insta_user_name')) then
+        add('  insta_user_insta_user_name = :insta_user_insta_user_name');
+
+      add('  insta_user_date = :insta_user_date         ');
+      add('WHERE');
+      add('  insta_user_uuid = :insta_user_uuid ');
+
+    end;
+    qry.ParamByName('insta_user_uuid').AsString :=
+      aupd.FindValue('insta_user_uuid').value;
+
+    qry.ParamByName('insta_user_date').AsDateTime := now;
+
+    if Assigned(aupd.FindValue('insta_user_type')) then
+      qry.ParamByName('insta_user_type').AsString :=
+        aupd.FindValue('insta_user_type').value;
+
+    if Assigned(aupd.FindValue('insta_user_comment')) then
+      qry.ParamByName('insta_user_comment').AsString :=
+        aupd.FindValue('insta_user_comment').value;
+    qry.ParamByName('insta_user_person_uuid').AsGUID := StringToGUID(ouuid);
+    if Assigned(aupd.FindValue('insta_user_insta_user_name')) then
+      qry.ParamByName('insta_user_insta_user_name').AsString :=
+        aupd.FindValue('insta_user_insta_user_name').value;
+
+    qry.ExecSQL;
+    result := '{"codretorno":"200","msgretorno":"Cliente alterado com sucesso"}';
+  finally
+    qry.Close;
+    FreeAndNil(qry);
+    FreeAndNil(con);
+  end;
+end;
+
+end.

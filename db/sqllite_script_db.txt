@@ -1,0 +1,85 @@
+
+CREATE TABLE `insta_hashtag` (
+  `hashtag_id` INTEGER INTEGER PRIMARY KEY,
+  `hashtag_name` VARCHAR(250)  NOT NULL,
+  `hashtag_date` DATETIME DEFAULT NULL
+) ;
+
+
+CREATE TABLE `insta_user` (
+  `insta_user_id` INTEGER PRIMARY KEY,
+  `insta_user_name` VARCHAR(250),  
+  `insta_user_date` DATETIME DEFAULT NULL,
+  `insta_user_last_visit` DATETIME DEFAULT NULL,
+   `insta_user_date_follow` DATETIME DEFAULT NULL,
+  `insta_user_bio` VARCHAR(1000),
+  `insta_user_following` INTEGER,
+   
+) ;
+
+
+CREATE TABLE `insta_comments` (
+  `insta_comment_id` INTEGER PRIMARY KEY,
+  `insta_comment_text` VARCHAR(5000),  
+  `insta_comment_date` DATETIME DEFAULT NULL
+) ;
+
+CREATE TABLE `insta_action` (
+  `insta_action_id` INTEGER PRIMARY KEY,
+  `insta_action_type` INTEGER,
+  `insta_action_date` DATETIME DEFAULT NULL,
+  `insta_action_coment` VARCHAR(1000) DEFAULT NULL,
+  `insta_action_insta_user`VARCHAR(250)
+) ;
+
+
+
+
+CREATE TABLE `person` (
+  `person_id` INTEGER  PRIMARY KEY,
+  `person_name` VARCHAR(250) DEFAULT NULL,
+  `person_type` INTEGER DEFAULT NULL,
+  `person_date` DATETIME DEFAULT NULL,
+  `person_password` VARCHAR(50) DEFAULT NULL,
+  `person_login` CHAR(20) DEFAULT NULL,
+  `person_insta_user` CHAR(50) DEFAULT NULL,
+  `person_insta_password` CHAR(50) DEFAULT NULL,
+  `person_mail` VARCHAR(255) DEFAULT NULL,
+  `person_ip` VARCHAR(50) DEFAULT NULL,
+  `person_country` VARCHAR(50) DEFAULT NULL,
+  `person_fone` VARCHAR(50) DEFAULT NULL,
+  `person_age` INTEGER DEFAULT NULL,
+  `person_adress` VARCHAR(255) DEFAULT NULL
+  
+) ;
+
+
+CREATE TABLE `insta_hashtag_person` (
+  `person_id` INTEGER  NOT NULL ,
+  `hashtag_id` integer NOT NULL,
+  `hashtag_person_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`person_id`,`hashtag_id`)
+);
+
+
+CREATE TABLE `insta_action_user` (
+  `user_id` INTEGER NOT NULL ,
+  `action_id` integer  NOT NULL,
+  `action_person_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`person_id`,`action_id`)
+) ;
+
+
+CREATE TABLE `insta_action_person` (
+  `person_id` INTEGER NOT NULL ,
+  `action_id` integer  NOT NULL,
+  `action_person_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`person_id`,`action_id`)
+) ;
+
+
+CREATE TABLE `insta_comments` (
+  `insta_comment_id` INTEGER PRIMARY KEY,
+  `insta_comment_text` TEXT,  
+  `insta_comment_date` DATETIME DEFAULT NULL
+) ;

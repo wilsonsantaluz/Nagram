@@ -1,0 +1,133 @@
+<!-- !DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" -->
+<html>
+   <head>
+      <title>Nagram apiDoc </title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="css/serverfunctioninvoker.css" />
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="js/base64.js"></script>
+      <script type="text/javascript" src="js/json2.js"></script>
+      <script type="text/javascript" src="js/serverfunctionexecutor.js"></script>
+      <script type="text/javascript" src="js/connection.js"></script>
+      <script type="text/javascript" src="<#serverfunctionsjs>"></script>
+      <script type="text/javascript" src="js/serverfunctioninvoker.js"></script>
+      <script>
+         var loginRequired;
+         function onLoad()
+         {
+           loginRequired = <#loginRequired>;
+           setConnection('<#host>', '<#port>', '<#urlpath>');
+           if (loginRequired)
+           {
+             showLogin(true);
+           }
+           else
+           {
+             if (setCredentials('', ''))
+               createClassTree();
+             else
+               alert('Connection error');
+           }
+         }
+         
+         function showLogin(show)
+         {
+           var loginDiv = document.getElementById('logindiv');
+           if (show)
+           {
+               loginDiv.style.display="block";
+           }
+           else
+           {
+               loginDiv.style.display="none";
+           }
+         }
+         
+         function onLogin()
+         {
+           if (loginRequired)
+           {
+             if (AdminInst == null)
+             {
+                 if (setCredentials(document.getElementById('userField').value, document.getElementById('passwrdField').value))
+                 {
+                   createClassTree();
+                   loginCorrect(true);
+                 }
+                 else
+                   loginCorrect(false);
+             }
+           }
+         }
+         
+         function loginCorrect(isCorrect)
+         {
+           var errorDiv = document.getElementById('loginError');
+         
+           if ( errorDiv != null )
+           {
+             errorDiv.innerHTML= isCorrect ? "" : "login incorrect";
+           }
+         }
+         
+      </script>
+   </head>
+   <body onload="onLoad()">
+      <div class="bodymain">
+         <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+               <div class="navbar-header">
+                  <a class="navbar-brand" href="#">Nagram Rest Api</a>
+               </div>
+               <ul class="nav navbar-nav">
+                  <li ><a href="/reversestring">Home</a></li>
+                  <li class="active"> <a href="#">Server functions</a></li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/config">Config</a></li>
+               </ul>
+            </div>
+         </nav>
+         <div class="container h-100">
+            <div class="d-flex justify-content-center h-100">
+               <div id="contentdiv" class="user_card" >
+                  <div id="logindiv" class="panel panel-primary" style="display:none ;margin:0 auto; max-width: 400px">
+                     <div class="panel-heading">Login</div>
+                     <div class="panel-body" >
+                        <div class="d-flex justify-content-center form_container">
+                           <form onsubmit="onLogin(); return false;">
+                              <div class="form-group">
+                                 <label for="userField">Usuario</label>
+                                 <input class="form-control loginField" id="userField" placeholder="Usuario">
+                                 <label for="passwrdField">Password</label>
+                                 <input class="form-control loginField" id="passwrdField" placeholder="Senha">
+                              </div>
+                              <div id="loginError" class="errorMsg"></div>
+                              <br />
+                              <input id="loginButton" type="submit" class="btn btn-success" value="LOG IN" />
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div id="framecontent" class="nav">
+            <div id="resultWrapper">
+               <table class="table table table-hover table-sm">
+                  <tr>
+                     <td class="resultLabel table-primary">Executed:</td>
+                     <td id="resultMethodSignature" class="table-primary"></td>
+                  </tr>
+                  <tr>
+                     <td class="resultLabel">Result:</td>
+                     <td id="resultMethodResult" class="table-success"></td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

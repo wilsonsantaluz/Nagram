@@ -1,0 +1,38 @@
+inherited FmailSend_NmXhdpiPh: TFmailSend_NmXhdpiPh
+  ClientHeight = 615
+  ClientWidth = 400
+  DesignerMasterStyle = 3
+  inherited toolbarmain: TToolBar
+    Size.Width = 400.000000000000000000
+    inherited btoptions: TSpeedButton [0]
+      OnClick = nil
+    end
+    inherited Label1: TLabel [1]
+      Size.Width = 400.000000000000000000
+    end
+  end
+  inherited ltlgeral: TLayout
+    Size.Width = 370.000000000000000000
+    Size.Height = 537.000000000000000000
+    inherited rectop: TRectangle
+      Size.Width = 370.000000000000000000
+    end
+    inherited recbtn: TRectangle
+      Position.Y = 487.000000000000000000
+      Size.Width = 370.000000000000000000
+      inherited bt_enviar: TSpeedButton
+        Size.Width = 370.000000000000000000
+      end
+    end
+    inherited recmemo: TRectangle
+      Size.Width = 370.000000000000000000
+      Size.Height = 407.000000000000000000
+      inherited memoinfo: TMemo
+        Size.Width = 360.000000000000000000
+        Size.Height = 397.000000000000000000
+        Viewport.Width = 360.000000000000000000
+        Viewport.Height = 397.000000000000000000
+      end
+    end
+  end
+end

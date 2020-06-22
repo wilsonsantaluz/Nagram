@@ -1,0 +1,34 @@
+209.239.112.15
+root
+gvqhexAk4KDeSt5
+//---------------------------------------------------------------
+comandos
+  ps aux | grep -i 'NagramRestServer'
+  kill  -9
+  nohup ./NagramRestServer > /dev/null &
+//---------------------------------------------------------------
+putty.exe root@209.239.112.15 -pw gvqhexAk4KDeSt5
+
+{"insta_person_type":"3","insta_person_uuid":"D6B0C5A5-0997-4947-BE5F-B48DB9A3B655"}
+//insert action
+{"insta_action_person_id":"D6B0C5A5-0997-4947-BE5F-B48DB9A3B655","insta_action_type":"2","insta_action_comment":"a fe supera tudo","insta_action_insta_user_name":"manteganocafe"}
+//coment
+
+{"insta_comment_person_id":"D6B0C5A5-0997-4947-BE5F-B48DB9A3B655","insta_comment_text":"oi como vai"}
+
+//hastag
+
+
+{"insta_hashtag_person_id":"D6B0C5A5-0997-4947-BE5F-B48DB9A3B655","insta_hashtag_name":"goiania"}
+//person
+{"insta_user_name":"wilsonluz2019","insta_user_last_visit":"2020-06-06 19:23:00","insta_user_date_follow":"2020-06-06 19:23:00","insta_user_bio":"robust negroe","insta_user_following":"1","insta_user_followings":10,"insta_user_posts":"20","insta_user_person_uuid":"D6B0C5A5-0997-4947-BE5F-B48DB9A3B655"}
+
+ insta_user_name = ?insta_user_name,
+  insta_user_date = ?insta_user_date,
+  insta_user_last_visit = ?insta_user_last_visit,
+  insta_user_date_follow = ?insta_user_date_follow,
+  insta_user_bio = ?insta_user_bio,
+  insta_user_following = ?insta_user_following,
+  insta_user_followings = ?insta_user_followings,
+  insta_user_posts = ?insta_user_posts,
+  insta_user_person_uuid = ?insta_user_person_uuid,

@@ -1,0 +1,39 @@
+unit nagram.rest.model.action;
+
+interface
+
+uses
+  System.SysUtils,
+  System.classes;
+
+type
+  TngAction = class
+  private
+
+    Fuuid:tguid;
+    Fperson_uuid:Tguid;
+    FActionType: integer;
+    FDate: Tdatetime;
+    FComment: string;
+    Finsta_user_name:string;
+    FUrl: string;
+
+  public
+
+    property insta_action_type: integer read FActionType write FActionType;
+    property insta_action_date: Tdatetime read FDate write FDate;
+    property insta_action_comment : string read FComment write FComment;
+    property insta_action_url: string read FUrl write FUrl;
+    property insta_action_person_uuid: tguid read Fperson_uuid write Fperson_uuid;
+    property insta_action_uuid:tguid read Fuuid write Fuuid;
+    property insta_action_insta_user_name: string read Finsta_user_name write Finsta_user_name;
+
+  end;
+
+implementation
+
+{ TBotAction }
+
+
+
+end.

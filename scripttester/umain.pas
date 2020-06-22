@@ -1,0 +1,98 @@
+unit umain;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, System.json,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm14 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Memo1: TMemo;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form14: TForm14;
+  oscript: TStringList;
+  FLoaded: Boolean;
+  FoldUrl: string;
+
+const
+  _ckthumbnail = 'ckfirst_thumbnail=';
+  _chuserthumbnail = 'chuserthumbnail=';
+
+implementation
+
+{$R *.dfm}
+
+procedure setbasescript();
+begin
+  oscript.Clear;
+  oscript.Add('function getElementByXpath(path) { ');
+  oscript.Add
+    ('   return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue; ');
+  oscript.Add('};     ');
+
+end;
+
+procedure gettumbnail();
+var
+  s: string;
+begin
+  setbasescript();
+
+  setbasescript();
+  // _ckthumbnail
+  oscript.Add('document.cookie = "' + _ckthumbnail +
+    '; expires = Thu, 01 Jan 1970 00:00:00 GMT"');
+  oscript.Add
+    ('var first_thumbnail = getElementByXpath(''//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a/div'');');
+
+  oscript.Add('if (first_thumbnail.className   != '''') { ');
+  oscript.Add('document.cookie = "' + _ckthumbnail +
+    '"+first_thumbnail.className+" ; expires = Thu, 01 Jan 2025 00:00:00 GMT";');
+  oscript.Add('  first_thumbnail.click();');
+  oscript.Add(' } else  { ');
+  oscript.Add('    alert("nothing found");');
+  oscript.Add(' };');
+
+  oscript.savetofile('c:\scriptporco.txt');
+
+end;
+
+procedure TForm14.Button1Click(Sender: TObject);
+begin
+  oscript := TStringList.Create;
+  gettumbnail();
+end;
+
+procedure TForm14.Button2Click(Sender: TObject);
+var
+
+  valvalue: string;
+  json: TJSONValue;
+  countitens:string;
+  lst:tstringList;
+begin
+ { lst:=TStringList.Create;
+  lst.LoadFromFile('c:\json.txt');
+  valvalue := lst.Text;
+  json := TJSONObject.ParseJSONValue(valvalue);
+
+  countitens := json.GetValue<string>('["entry_data"]["TagPage"][0]["graphql"]["hashtag"]["edge_hashtag_to_media"].count');
+  caption:= countitens;  }
+
+  memo1.Lines.Text:=StringReplace(Memo1.Lines.Text,'\\','',[rfReplaceAll]);
+end;
+
+end.

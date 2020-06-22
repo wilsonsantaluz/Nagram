@@ -1,0 +1,3 @@
+dev.ugestor.com.br 5432
+postgres	
+RBB7tx5gV7upbg

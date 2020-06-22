@@ -1,0 +1,44 @@
+unit nagram.rest.model.user;
+
+interface
+
+uses
+  System.SysUtils,
+  System.classes;
+
+type
+  TUser = class
+  private
+    FId: integer;
+    FName: string;
+    Fuuid: string;
+    Fperson_uuid: string;
+    FDate: TDateTime;
+    FLastVisit: TDateTime;
+    FFollow: integer;
+    FPosts: integer;
+    FDateFollow: TDateTime;
+    Fbio: string;
+    FFollowing: integer;
+    Ffollowed: integer;
+
+  public
+    property Id: integer read FId write FId;
+    property person_uuid: String read Fperson_uuid write Fperson_uuid;
+    property uuid: String read Fuuid write Fuuid;
+    property Name: String read FName write FName;
+    property Date: TDateTime read FDate write FDate;
+    property LastVisit: TDateTime read FLastVisit write FLastVisit;
+    property Posts: integer read FPosts write FPosts;
+    property DateFollow: TDateTime read FDateFollow write FDateFollow;
+    property Bio: String read Fbio write Fbio;
+    property Follow: integer read FFollow write FFollow;
+    property Following: integer read FFollowing write FFollowing;
+    property Followed: integer read Ffollowed write Ffollowed;
+
+  end;
+type
+  Tusers = array of Tuser;
+implementation
+
+end.

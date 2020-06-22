@@ -1,0 +1,72 @@
+//*[@id="react-root"]/section/main/article/div[2]/div/div[12]/div[1]/a/div
+//*[@id="react-root"]/section/main/article/div[1]/div/div/div[1]/div[1]/a/div');
+
+ _sharedData["entry_data"]["TagPage"][0]["graphql"]["hashtag"]["edge_hashtag_to_media"].count;
+
+ _sharedData["entry_data"]["TagPage"][0]["graphql"]["hashtag"]["edge_hashtag_to_media"]["edges"][0]["node"].shortcode;
+
+CREATE TABLE `insta_action` (
+  `action_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `action_type` INTEGER,
+  `action_date` DATETIME DEFAULT NULL,
+  `action_coment` VARCHAR(1000) DEFAULT NULL
+  `action_user` VARCHAR(250) DEFAULT NULL,
+  
+  PRIMARY KEY (`action_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+CREATE TABLE `` (
+  `person_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `person_name` VARCHAR(250) DEFAULT NULL,
+  `person_type` INTEGER DEFAULT NULL,
+  `person_date` DATETIME DEFAULT NULL,
+  `person_password` VARCHAR(50) DEFAULT NULL,
+  `person_login` CHAR(20) DEFAULT NULL,
+  `person_insta_user` CHAR(50) DEFAULT NULL,
+  `person_insta_password` CHAR(50) DEFAULT NULL,
+  `person_mail` VARCHAR(255) DEFAULT NULL,
+  `person_ip` VARCHAR(50) DEFAULT NULL,
+  `person_country` VARCHAR(50) DEFAULT NULL,
+  `person_fone` VARCHAR(50) DEFAULT NULL,
+  `person_age` INTEGER DEFAULT NULL,
+  `person_adress` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`person_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+
+
+https://www.instagram.com/p/
+
+
+tmlogin.Enabled := false;
+  Fcoment := 'Bonita foto';
+  if (FEstagioNavegacao = navegandologin) then
+  begin
+    if not Floaded then
+      tmlogin.Enabled := true
+    else
+    begin
+      FEstagioNavegacao := navegandohashtag;
+      dologin(Sender);
+
+    end;
+
+  end;

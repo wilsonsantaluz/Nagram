@@ -1,0 +1,119 @@
+
+CREATE TABLE `insta_hashtag` (
+  `hashtag_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `hashtag_name` VARCHAR(250)  NOT NULL,
+  `hashtag_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`hashtag_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+
+CREATE TABLE `insta_user` (
+  `insta_user_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `insta_user_name` VARCHAR(250),  
+  `insta_user_date` DATETIME DEFAULT NULL,
+  `insta_user_last_visit` DATETIME DEFAULT NULL,
+  `insta_user_bio` VARCHAR(1000),
+  `insta_user_following` INTEGER,
+  
+  PRIMARY KEY (`insta_user_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+
+CREATE TABLE `insta_action` (
+  `insta_action_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `insta_action_type` INTEGER,
+  `insta_action_date` DATETIME DEFAULT NULL,
+  `insta_action_coment` VARCHAR(1000) DEFAULT NULL,
+  `vaction_insta_user`VARCHAR(250),
+  
+  PRIMARY KEY (`insta_action_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+
+CREATE TABLE `person` (
+  `person_id` INTEGER NOT NULL AUTO_INCREMENT,
+  `person_name` VARCHAR(250) DEFAULT NULL,
+  `person_type` INTEGER DEFAULT NULL,
+  `person_date` DATETIME DEFAULT NULL,
+  `person_password` VARCHAR(50) DEFAULT NULL,
+  `person_login` CHAR(20) DEFAULT NULL,
+  `person_insta_user` CHAR(50) DEFAULT NULL,
+  `person_insta_password` CHAR(50) DEFAULT NULL,
+  `person_mail` VARCHAR(255) DEFAULT NULL,
+  `person_ip` VARCHAR(50) DEFAULT NULL,
+  `person_country` VARCHAR(50) DEFAULT NULL,
+  `person_fone` VARCHAR(50) DEFAULT NULL,
+  `person_age` INTEGER DEFAULT NULL,
+  `person_adress` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`person_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+
+CREATE TABLE `insta_hashtag_person` (
+  `person_id` INTEGER  NOT NULL ,
+  `hashtag_id` integer NOT NULL,
+  `hashtag_person_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`person_id`,`hashtag_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;
+
+
+CREATE TABLE `insta_action_person` (
+  `person_id` INTEGER NOT NULL ,
+  `action_id` integer  NOT NULL,
+  `action_person_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`person_id`,`action_id`)
+) ENGINE=InnoDB
+CHECKSUM=0
+DELAY_KEY_WRITE=0
+PACK_KEYS=0
+AUTO_INCREMENT=0
+AVG_ROW_LENGTH=0
+MIN_ROWS=0
+MAX_ROWS=0
+ROW_FORMAT=DEFAULT
+KEY_BLOCK_SIZE=0;

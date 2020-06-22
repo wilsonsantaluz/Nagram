@@ -1,0 +1,418 @@
+object FUserView: TFUserView
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 597
+  ClientWidth = 480
+  StyleBook = fmain.mainthema
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  FullScreen = True
+  ShowFullScreenIcon = True
+  OnClose = FormClose
+  OnShow = FormShow
+  DesignerMasterStyle = 3
+  object tooltop: TToolBar
+    Size.Width = 480.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object lbltitle: TLabel
+      Align = Contents
+      StyledSettings = [Family, Size, Style, FontColor, Other]
+      Size.Width = 480.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'toollabel'
+      TextSettings.Font.Family = 'Amatic SC'
+      TextSettings.FontColor = xFFF9A61A
+      TextSettings.HorzAlign = Center
+      Text = 'Informa'#231#245'es do usu'#225'rio'
+      TabOrder = 0
+    end
+    object bt_close: TSpeedButton
+      Align = Left
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'priortoolbutton'
+      Text = 'Fechar'
+      OnClick = bt_closeClick
+    end
+  end
+  object toolbutton: TToolBar
+    Align = Bottom
+    Position.Y = 549.000000000000000000
+    Size.Width = 480.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+  end
+  object recbody: TRectangle
+    Align = Client
+    Fill.Color = x50E0E0E0
+    Margins.Left = 15.000000000000000000
+    Margins.Top = 15.000000000000000000
+    Margins.Right = 15.000000000000000000
+    Margins.Bottom = 15.000000000000000000
+    Size.Width = 450.000000000000000000
+    Size.Height = 471.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Color = claWhite
+    XRadius = 10.000000000000000000
+    YRadius = 10.000000000000000000
+    object lstdadosgerais: TListBox
+      Align = Client
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Size.Width = 446.000000000000000000
+      Size.Height = 467.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'transparentlistboxstyle'
+      TabOrder = 0
+      DisableFocusEffect = True
+      ItemIndex = 0
+      DefaultItemStyles.ItemStyle = 'listboxitemnodetail'
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      GroupingKind = Grouped
+      Viewport.Width = 446.000000000000000000
+      Viewport.Height = 467.000000000000000000
+      object AccountInfo: TListBoxGroupHeader
+        HitTest = True
+        IsSelected = True
+        ItemData.Bitmap.PNG = {
+          89504E470D0A1A0A0000000D49484452000000200000001D0806000000CB9E6E
+          87000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+          049349444154484BED955F6C14451CC7BF3BB3B3777BCBF5B62D14255E0B18C5
+          07C58889BE88A1B189FAE41F821AE3031A9226FE418C313CF0505F34106388A8
+          98604CA451A242D0C407FFA029A4480C21280444D216E81F7BFD7BB7F7676FEF
+          7677769C2BEB53EB758F34F1C5CF6632C964BE33DF99FDFDE687FF1A25EC23D1
+          97D97EA78F72A7279C6688EA90E0DE793BADFDF194729887531A26B28113B9D7
+          36F342F54BAE57A8CF1DB8A20C1E5464F32759A07CA3A0BAE7B1D5FD57C3E991
+          2161BF282CD05FA2C9382584819218986C44894353B495AADAD44D2BFAE0D783
+          9BDEFF6AA82B154A2211D900386DD348D3DCE69468A08A06261B14820055D0A4
+          499625D6BEAC04ECF7DECB9D7787AA45896CC021D66F2BD9BDD0699BDC93CD9D
+          9E121584C6A501816A9043854F231E4FAC6641F9F867173B3B42695D221B48AA
+          C6C189E22561283723A5AE01919B53224D28B25762D20491264A70FC49080DA6
+          0FEBCD505A97C806EE3377FFA4C76347A7AB6731E39C87F015084EA042974618
+          54F93B08A1D7C39A78A02A35AE2BEB133D0624E3F6A94B021CB63785F1FC190C
+          8C9CC2853FCF6268680C931305142D8E523EC0C850D173B3CBDE0D6575899C86
+          7DA24725D3D6602CD6D231513A83D9DC306667F3B29560E51C14CB55246206B4
+          782C6B6AA9AD6F3F33F86D28AD4BE41B280C9F7BA429B6A683FB0E88E0E09CC3
+          CA3AC85B15F83EC772E396232DF19B5E5C6B76AD8BBA798DBA3770D2DA756B1C
+          E6C37E50BCA7E05EDBB8CA7870DDB8F30B2CE70A4646463170790AF9828D56B3
+          E5C207CFCFAE57645884D2C82C78033F649E334E4CBFFE49B2D27CD960AB3E94
+          F9BF2DA9B5AFABF029B89E854AA5847CAE8C72D99569A74367C90337B2798D05
+          0DF8BCDA9BD096BFD06C6EA0A6BA161A6991133594FC71B8818D42411AC8D7AE
+          DE87414D37DD7AC717A1B461E619F8EEDA131B989A78D264B741081F05EFAACC
+          ED2964ED11E44A63A87AB5D33B28955CC4340301F5B58B23E7B786F286996780
+          2929A349EB9027B560790328F8C370F8247C258B823D81CC700ED6B48B8AE341
+          04C0CC5F651426B27B761EBCFD817089869867E0A1F64F4F1AB4E367571451E4
+          A332E7C761FB1978220F16E7D08C004C2748300365CB93514C60982965B63AB9
+          2B5CA221E619A8055319034FC782B67322E070E41BEF72BB5676E75A203F160F
+          A09B01E2F2C185E1A0B965053CE677ED3EB6A5A14A5863C120BC3FB57B763238
+          BD090139A20845BE7DB2EE8B5AD079320B3C78B2AF9951A880AA7110E66219A3
+          AA93BBA6874B44664103353A9BDFB336AED8B345787CB3E0FA5522D8DCE3E34B
+          033E0F649337227B421578F286841373D3DA263B9447E65F0DFCC3A3E94347FB
+          F7A5FB8F7F4E5D2A52FD2A549FCA9424884195D530466525142ECC64D347DB1E
+          7FA718CA22B3682DD8BB77AF393D3373656C74B4AFB7B777F3C163DBDB07667E
+          5C9F779CBB9848AD116A652CC15A4EBFF5ECAFDF87928658D4C0FEFDFBBB3299
+          CCAED6D6B68F77EC78E55038BC642CFA0B888431BD4DD7B5C3E1D09252D7404F
+          4F0FC966AD2E4D53F77577777BE1F09252D7403A9D362C2BDBBE73E71B07C2A1
+          25A7AE01DBB65394D2571545B9A14AF73F8B03FC0D72AFFF3804FB06B7000000
+          0049454E44AE426082}
+        Size.Width = 401.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxgroupheader'
+        TabOrder = 0
+        Text = 'Info. usu'#225'rio'
+      end
+      object linameuser: TListBoxItem
+        Touch.InteractiveGestures = [TwoFingerTap, PressAndTap, LongTap]
+        TextSettings.Font.Family = '(Default)'
+        TextSettings.Font.Size = 11.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        HitTest = True
+        Position.Y = 30.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 1
+        object lbname: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 8
+          CanParentFocus = True
+          ReadOnly = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 2.000000000000000000
+          Position.Y = 31.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Size, Style]
+        end
+        object Label9: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 14.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          TextSettings.VertAlign = Leading
+          Text = 'Nome usuario Instagram'
+          TabOrder = 1
+        end
+      end
+      object lidatacad: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 95.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 2
+        object lbdatacad: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 3
+          CanParentFocus = True
+          ReadOnly = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 2.000000000000000000
+          Position.Y = 31.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Style]
+        end
+        object Label10: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Data cadastro'
+          TabOrder = 1
+        end
+      end
+      object lilastview: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 160.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 3
+        object lblastvisit: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 3
+          CanParentFocus = True
+          ReadOnly = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 2.000000000000000000
+          Position.Y = 31.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Style]
+        end
+        object Label11: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Data ultima intera'#231#227'o'
+          TabOrder = 1
+        end
+      end
+      object licontainstagram: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 225.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        object lbdatafollow: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 2
+          CanParentFocus = True
+          ReadOnly = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 2.000000000000000000
+          Position.Y = 31.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Style]
+        end
+        object Label12: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Data que seguiu'
+          TabOrder = 1
+        end
+      end
+      object lifollow: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 290.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        object lbseguidores: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 0
+          CanParentFocus = True
+          ReadOnly = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          Position.X = 2.000000000000000000
+          Position.Y = 31.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Style]
+        end
+        object Label13: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Seguindo'
+          TabOrder = 1
+        end
+      end
+      object lifolows: TListBoxItem
+        Position.Y = 355.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        object lbseguindo: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 0
+          CanParentFocus = True
+          ReadOnly = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          Position.X = 2.000000000000000000
+          Position.Y = 31.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyledSettings = [Style]
+        end
+        object Label2: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Seguidores'
+          TabOrder = 1
+        end
+      end
+      object libio: TListBoxItem
+        Position.Y = 420.000000000000000000
+        Size.Width = 401.000000000000000000
+        Size.Height = 97.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        object Label3: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 391.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Bio'
+          TabOrder = 2
+        end
+        object memobio: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          StyledSettings = [Size, Style, FontColor]
+          TextSettings.Font.Family = 'Roboto'
+          Align = Client
+          CanParentFocus = True
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Size.Width = 397.000000000000000000
+          Size.Height = 68.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 397.000000000000000000
+          Viewport.Height = 68.000000000000000000
+        end
+      end
+    end
+  end
+end

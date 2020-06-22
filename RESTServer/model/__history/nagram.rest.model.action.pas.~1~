@@ -1,0 +1,49 @@
+unit nagram.rest.model.action;
+
+interface
+
+uses
+  System.SysUtils,
+  System.classes;
+
+type
+  TBotAction = class
+  private
+    FId: integer;
+    Fuuid:string;
+    Fperson_uuid:string;
+    FActionType: integer;
+    FDate: Tdatetime;
+    FComment: string;
+    Finsta_user_name:string;
+    FUser_id: integer;
+    FUrl: string;
+
+  public
+    property Id: integer read FId write FId;
+    property ActionType: integer read FActionType write FActionType;
+    property Date: Tdatetime read FDate write FDate;
+    property Comment : string read FComment write FComment;
+    property User_id: integer read FUser_id write FUser_id;
+    property Url: string read FUrl write FUrl;
+    property Person_uuid: string read Fperson_uuid write Fperson_uuid;
+    property Uuid: string read Fuuid write Fuuid;
+    property insta_user_name: string read Finsta_user_name write Finsta_user_name;
+    constructor create;
+  end;
+
+implementation
+
+{ TBotAction }
+
+constructor TBotAction.create;
+begin
+  FId := -1;
+  FActionType := 0;
+  FDate := now;
+  FComment := '';
+  FUser_id := -1;
+  FUrl := '';
+end;
+
+end.

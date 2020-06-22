@@ -1,0 +1,535 @@
+object FviewPerson: TFviewPerson
+  Left = 0
+  Top = 0
+  ClientHeight = 578
+  ClientWidth = 404
+  StyleBook = fmain.mainthema
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 3
+  object toolbarmain: TToolBar
+    Padding.Top = 5.000000000000000000
+    Padding.Bottom = 5.000000000000000000
+    Opacity = 0.800000011920929000
+    Size.Width = 404.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    object btclose: TSpeedButton
+      Align = Left
+      Position.Y = 5.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'backtoolbutton'
+      OnClick = btcloseClick
+    end
+    object btsaveperson: TSpeedButton
+      Align = Right
+      Position.X = 356.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'donetoolbutton'
+      OnClick = btsavepersonClick
+    end
+    object lblpersoncad: TLabel
+      Align = Client
+      Size.Width = 308.000000000000000000
+      Size.Height = 38.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.HorzAlign = Center
+      Text = 'Editando cadastro'
+      TabOrder = 0
+    end
+    object AniIndicator1: TAniIndicator
+      Align = Client
+      StyleLookup = 'aniindicatorstyle'
+      Scale.X = 3.000000000000000000
+      Scale.Y = 3.000000000000000000
+      Size.Width = 102.666671752929700000
+      Size.Height = 12.666667938232420000
+      Size.PlatformDefault = False
+      Style = Circular
+    end
+  end
+  object rectbody: TRectangle
+    Align = Client
+    Fill.Color = x50E0E0E0
+    Margins.Top = 10.000000000000000000
+    Size.Width = 404.000000000000000000
+    Size.Height = 520.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Color = claWhite
+    XRadius = 10.000000000000000000
+    YRadius = 10.000000000000000000
+    object lstdadosgerais: TListBox
+      Align = Contents
+      Padding.Left = 2.000000000000000000
+      Padding.Top = 2.000000000000000000
+      Padding.Right = 2.000000000000000000
+      Padding.Bottom = 2.000000000000000000
+      Opacity = 0.800000011920929000
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 394.000000000000000000
+      Size.Height = 510.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'transparentlistboxstyle'
+      TabOrder = 0
+      ShowSizeGrip = True
+      AlternatingRowBackground = True
+      DisableFocusEffect = True
+      Images = fmain.ImageList2
+      DefaultItemStyles.ItemStyle = 'listboxitemnodetail'
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      GroupingKind = Grouped
+      ParentShowHint = False
+      ShowHint = True
+      Viewport.Width = 394.000000000000000000
+      Viewport.Height = 510.000000000000000000
+      object AccountInfo: TListBoxGroupHeader
+        HitTest = True
+        ItemData.Bitmap.PNG = {
+          89504E470D0A1A0A0000000D49484452000000200000001D0806000000CB9E6E
+          87000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+          049649444154484BED955F681C451CC7BF3BB3B3F7679BDCE5925C3578495BD1
+          FAA01515F4C56A8301F5C93FA12AE2439542C03FB522D2873EC4172541A458B5
+          4245B0418BDA52051FFC534B5B528B94526D6DD590A46DFE34D7E492BBBDCBED
+          EDDDEECE8E73E9FA9478D92B015FFC2CC3C030DF99EFCCFE7EF3C37F8DE2F781
+          389ADE76BB8B52A723AC2688CAA8E0CE3933A5FDF1947280FB53EA26B081E3B9
+          D7BAF995CA973C59A62EB7608B12B85796CD9D669EF28D824AFF636B062FF9D3
+          0343FC7E5998177989B68529210C9484C064234A189AA2AD56D5C61E9A21235F
+          8F6C7AFFABD1AE982F09446003E034A991C685CD29D140150D4C3628041E2AA0
+          6DABC9AAE8BA97158FFD3630D479A7AF5A96C0062C62FCBA9ADD83084DCA3DD9
+          C2E929514168581A10A87839947906E170740DF34AC73EBBD0D9E14B6B12D840
+          83AAEF1B9E3A2D74E546C4D4B52072734AA40945F64A489A20D24411963B0DA1
+          21EEC278D397D624B0817BE37D3F255B138732953398B5CE41B80A0427501191
+          461854F93B08A1D7C29A38A02AD5AF296B133C062453E6C93F05384C670653F9
+          D3181E3F89F37F9DC1E8E824A6AF16306F7014F31E867E4F3B7676D5BBBEAC26
+          81D3F0A8E85549C6180985121D578BA731971BC3DC5C5EB6228C9C85F95205D1
+          900E2D1CCAC6B5D896B79F19F9D697D624F00D14C6CE3ED2185ADBC15D0B4470
+          70CE61642DE48D325C97A345BFE960227CC38BEBE25DEB836E5EA5E60D9C3076
+          DE1C46FC61D79BBFAB605FDED8A63FB07ECAFA19867511E3E313181E9A41BE60
+          A2399E38FFC1F3731B141916BE34304BDEC00FE9E7F4E399D73F69C8A8433A6B
+          FB50E6FFD606AD7D7D99CFC0760C94CB45E47325944AB64CBB0822AC61EFF56C
+          5E6549032EAF0C44B596179A520FD2B8BA0E1A49C8891A8AEE146CCF44A1200D
+          E4AB57EF22EAE976AAF9B62F7C69DD2C32F0DDE527EE666AF4C938BB0542B828
+          3897646ECF206B8E23579C44C5A99EDE42B16823A4E9106145BB307E6E8B2FAF
+          9B45069812D31BB50E79520386338C823B068B4FC355B2289857911ECBC1C8D8
+          285B0E8407CC5E29A190CEF6EFD877EBFDFE1275B1C8C043ED9F9ED069C7115B
+          CC639E4FC89C9F82E9A6E1883C589843D33DB0084194E928198E8C6202BD29A6
+          CC55A677FA4BD4C52203D5602A61F8E990973C2B3C0E4BBEF13637AB6577A179
+          F263610F91B887B07C70A15B684AB4C2616E57DFE1CD7555C22A4B06E17DB1BE
+          B969EFD42678E4A02214F9F6C9BA2FAA41E7C82C70E0C8BE6A46A102AAC64198
+          8D558CAA56EE72C45F22304B1AA8D2D9F49EB1B1B57FB37078B7E0914B44B085
+          C7C795065CEEC9266F44F6842A70E40D092364A7B44DA62F0FCCBF1AF8874753
+          FB0F0DEE4E0D1EFB9CDA54C40655A82E95294910822AAB6188CA4A286CC45B1A
+          3FDAFAF83BF3BE2C30CBD6825DBB76C533B3B3172727268E0E0C0C74EF3BBCAD
+          7D78F6C70D79CBBA8389D85AA19627A32C71EAAD677FF9DE97D4C5B206F6ECD9
+          D3954EA7773637273FDEBEFD95FDFEF08AB1EC2F2012C622C948443BE00FAD28
+          350DF4F6F6926CD6E8D23475774F4F8FE30FAF28350DA45229DD30B2ED3B76BC
+          B1D71F5A716A1A304D3346297D555194EBAA74FFB33CC0DF2B73FF26A8893EA5
+          0000000049454E44AE426082}
+        Size.Width = 354.000000000000000000
+        Size.Height = 30.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxgroupheader'
+        TabOrder = 0
+        Text = 'Dados da conta'
+      end
+      object linomeconta: TListBoxItem
+        Touch.InteractiveGestures = [TwoFingerTap, PressAndTap, LongTap]
+        TextSettings.Font.Family = '(Default)'
+        TextSettings.Font.Size = 11.000000000000000000
+        StyledSettings = [Family, Size, Style, FontColor]
+        HitTest = True
+        Position.Y = 30.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 1
+        object edtlogin: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 8
+          CanParentFocus = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claCrimson
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 62.000000000000000000
+          Position.Y = 28.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Login'
+          OnChange = edtloginChange
+        end
+        object Label6: TLabel
+          Align = Left
+          Padding.Left = 2.000000000000000000
+          Padding.Top = 2.000000000000000000
+          Padding.Right = 2.000000000000000000
+          Padding.Bottom = 2.000000000000000000
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 418.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          TextSettings.VertAlign = Leading
+          Text = 'Login'
+          TabOrder = 1
+        end
+        object imguser: TSpeedButton
+          Align = MostLeft
+          Images = fmain.ImageList2
+          ImageIndex = 6
+          Position.Y = 8.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object lisenhaconta: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 95.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 2
+        object edtsenhaconta: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 3
+          CanParentFocus = True
+          Password = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claCrimson
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 62.000000000000000000
+          Position.Y = 28.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Senha conta'
+          OnChange = edtloginChange
+        end
+        object Label5: TLabel
+          Align = Left
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 207.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Senha conta'
+          TabOrder = 1
+        end
+        object SpeedButton3: TSpeedButton
+          Align = MostLeft
+          ImageIndex = 7
+          Position.Y = 8.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object licontainsta: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 160.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 70.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'listboxitemrightdetail'
+        TabOrder = 3
+        object edtcontainsta: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 3
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claCrimson
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 62.000000000000000000
+          Position.Y = 33.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Conta instagram'
+          OnChange = edtloginChange
+        end
+        object Label4: TLabel
+          Align = Left
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 121.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Conta instagram'
+          TabOrder = 1
+        end
+        object SpeedButton4: TSpeedButton
+          Align = MostLeft
+          Images = fmain.ImageList2
+          ImageIndex = 8
+          Position.Y = 11.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object licontainstagram: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 230.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        object edtsenhainsta: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 2
+          Password = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claCrimson
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 62.000000000000000000
+          Position.Y = 28.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Senha Intagram'
+          OnChange = edtloginChange
+        end
+        object Label3: TLabel
+          Align = Left
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 207.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Senha instagram'
+          TabOrder = 1
+        end
+        object SpeedButton2: TSpeedButton
+          Align = MostLeft
+          ImageIndex = 9
+          Position.Y = 8.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object ListBoxItem1: TListBoxItem
+        TextSettings.Font.Family = '(Default)'
+        Position.Y = 295.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        object edtemail: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 0
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claCrimson
+          TextSettings.HorzAlign = Center
+          Position.X = 62.000000000000000000
+          Position.Y = 28.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Email contato'
+          OnChange = edtloginChange
+        end
+        object Label2: TLabel
+          Align = Left
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 207.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          Text = 'Email contato'
+          TabOrder = 1
+        end
+        object SpeedButton5: TSpeedButton
+          Align = MostLeft
+          Images = fmain.ImageList2
+          ImageIndex = 10
+          Position.Y = 8.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object ListBoxItem2: TListBoxItem
+        Position.Y = 360.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        object edtnomefull: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 7
+          CanParentFocus = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claOrange
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 62.000000000000000000
+          Position.Y = 28.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Nome completo'
+          StyledSettings = [Size, FontColor]
+          OnChange = edtloginChange
+        end
+        object Label1: TLabel
+          Align = Left
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 158.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          TextSettings.VertAlign = Leading
+          Text = 'Nome completo'
+          TabOrder = 0
+        end
+        object SpeedButton6: TSpeedButton
+          Align = MostLeft
+          ImageIndex = 13
+          Position.Y = 8.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object ListBoxItem3: TListBoxItem
+        Position.Y = 425.000000000000000000
+        Size.Width = 354.000000000000000000
+        Size.Height = 65.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        object edtFone: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Bottom
+          TabOrder = 7
+          CanParentFocus = True
+          TextSettings.Font.Family = 'sans-serif-condensed'
+          TextSettings.FontColor = claCrimson
+          TextSettings.HorzAlign = Center
+          TextSettings.VertAlign = Trailing
+          Position.X = 62.000000000000000000
+          Position.Y = 28.000000000000000000
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 287.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'Telefone'
+          OnChange = edtloginChange
+        end
+        object Label7: TLabel
+          Align = Left
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 59.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 418.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'listboxitemdetaillabel'
+          TextSettings.VertAlign = Leading
+          Text = 'Telefone'
+          TabOrder = 0
+        end
+        object SpeedButton7: TSpeedButton
+          Align = MostLeft
+          Images = fmain.ImageList2
+          ImageIndex = 12
+          Position.Y = 8.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 48.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object ShadowEffect1: TShadowEffect
+        Distance = 3.000000000000000000
+        Direction = 45.000000000000000000
+        Softness = 0.300000011920929000
+        Opacity = 0.600000023841857900
+        ShadowColor = claBlack
+      end
+    end
+  end
+end

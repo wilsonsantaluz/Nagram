@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   System.Generics.Collections,
+  dateutils,
   System.Classes,
   Data.DB,
   // FIREDAC-------------------------------------------
@@ -43,6 +44,8 @@ type
     procedure replaceActions(values: TBotActions);
     function deleteAction(value: integer): string;
     function getcountitens: integer;
+    class function getLastActionDate: TdateTime;
+    class function getCountLikeHour:Integer;
 
   end;
 
@@ -98,7 +101,8 @@ begin
       Tutil.gravalog('[TDAOACTION-E97]' + e.message);
   end;
 end;
-{------------------------------------------------------------------------------}
+
+{ ------------------------------------------------------------------------------ }
 function TActionDao.getAction(): TBotAction;
 var
   qry: TFDQuery;
@@ -135,7 +139,8 @@ begin
 
   end;
 end;
-{------------------------------------------------------------------------------}
+
+{ ------------------------------------------------------------------------------ }
 function TActionDao.getcountitens: integer;
 
 var
@@ -163,7 +168,40 @@ begin
 
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+class function TActionDao.getCountLikeHour: Integer;
+var
+  qry: TFDQuery;
+begin
+  try
+    result:=0;
+    qry := TFDQuery.Create(nil);
+    qry.Connection := dm_local.FDConnection1;
+    try
+      qry.SQL.Add('SELECT  count(insta_action_id) as count FROM insta_action');
+      qry.SQL.Add('WHERE ');
+      qry.SQL.Add('  insta_action_person_uuid = ' +
+        QuotedStr(GlobalPerson.person.person_uuid));
+
+      qry.SQL.Add(' AND   insta_action_date > :adata');
+      qry.SQL.Add('GROUP BY  insta_action_insta_user_name');
+      qry.ParamByName('adata').AsDateTime :=IncHour(now, -1);
+      qry.open;
+      if  qry.RecordCount > 0 then
+        result := qry.Fields[0].AsInteger;
+
+    finally
+      qry.Close;
+      FreeAndNil(qry);
+    end;
+  except
+    on e: exception do
+      Tutil.gravalog('[TDAOACTION-E193]' + e.message);
+
+  end;
+end;
+
+{ ----------------------------------------------------------------------------- }
 function TActionDao.getActions(criterio: string): TBotActions;
 var
   qry: TFDQuery;
@@ -185,7 +223,7 @@ begin
       qry.open;
       qry.Last;
 
-      result:=TObjectList<TBotaction>.Create;
+      result := TObjectList<TBotAction>.Create;
       qry.First;
 
       while not qry.Eof do
@@ -207,7 +245,7 @@ begin
           .AsInteger;
         tmpAction.insta_action_Url :=
           qry.FieldByName('insta_action_url').AsString;
-        result.add(tmpAction) ;
+        result.Add(tmpAction);
         qry.next;
       end;
 
@@ -219,7 +257,8 @@ begin
       Tutil.gravalog('[TDAOACTION-E207]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 procedure TActionDao.replaceActions(values: TBotActions);
 var
   qry: TFDQuery;
@@ -229,7 +268,7 @@ var
   lstvalues: tstringList;
 begin
   try
-    if  values.Count > 0 then
+    if values.Count > 0 then
     begin
       qry := TFDQuery.Create(nil);
       qry.Connection := dm_local.FDConnection1;
@@ -253,7 +292,7 @@ begin
         qry.SQL.Add('VALUES ');
 
         lstvalues := tstringList.Create;
-        for i := 0 to values.Count -1 do
+        for i := 0 to values.Count - 1 do
         begin
           value := values[i];
           if value.insta_action_uuid <> '' then
@@ -287,7 +326,35 @@ begin
       Tutil.gravalog('[TDAOACTION-E276]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+class function TActionDao.getLastActionDate: TdateTime;
+var
+  qry: TFDQuery;
+begin
+  try
+    result := 0;
+    try
+
+      qry := TFDQuery.Create(nil);
+      qry.Connection := dm_local.FDConnection1;
+      qry.SQL.Clear;
+      qry.SQL.Add('SELECT   max(insta_action_date) FROM   insta_action');
+      qry.SQL.Add('WHERE ');
+      qry.SQL.Add('  insta_action_person_uuid  = ' +
+        QuotedStr(GlobalPerson.person.person_uuid));
+      qry.open;
+      result := qry.Fields[0].AsDateTime;
+      qry.Close;
+    finally
+      FreeAndNil(qry);
+    end
+  except
+    on e: exception do
+      Tutil.gravalog('[TDAOACTION-E320]' + e.message);
+  end;
+end;
+
+{ ----------------------------------------------------------------------------- }
 procedure TActionDao.setAction(value: TBotAction; rawInsert: Boolean = false);
 var
   qry: TFDQuery;
@@ -370,5 +437,6 @@ begin
       Tutil.gravalog('[TDAOACTION-E359]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 end.

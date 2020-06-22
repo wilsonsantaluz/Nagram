@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils,
   json,
-
+  System.NetEncoding,
   rtti,
   System.ZLib,
 
@@ -77,12 +77,13 @@ type
     thema: TStyleBook;
     bt_login: TSpeedButton;
     Brush1: TBrushObject;
+    lblversion: TLabel;
+    ShadowEffect3: TShadowEffect;
     procedure bt_loginClick(Sender: TObject);
     procedure tm_initTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblnewPersonClick(Sender: TObject);
     procedure btnewuserClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure otesteClick(Sender: TObject);
     procedure cp1AuthEvent(const Sender: TObject; AnAuthTarget: TAuthTargetType;
       const ARealm, AURL: string; var AUserName, APassword: string;
@@ -284,15 +285,6 @@ begin
 end;
 
 { ----------------------------------------------------------------------------- }
-procedure TFlogin.Button1Click(Sender: TObject);
-var
-  Params: TStringList;
-  s:string;
-begin
-
-s:= QuotedStr(s);
-end;
-
 procedure TFlogin.cp1AuthEvent(const Sender: TObject;
   AnAuthTarget: TAuthTargetType; const ARealm, AURL: string;
   var AUserName, APassword: string; var AbortAuth: Boolean;

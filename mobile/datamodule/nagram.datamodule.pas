@@ -30,7 +30,9 @@ uses
 type
   Tdm_local = class(TDataModule)
     procedure FDConnection1BeforeConnect(Sender: TObject);
+    procedure Fdconnetion1AfterConnect(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
 
   private
 
@@ -62,13 +64,22 @@ begin
 
   FDConnection1.Params.Add('DriverID=SQLite');
   FDConnection1.LoginPrompt := False;
-  FDConnection1.BeforeConnect := FDConnection1BeforeConnect
+  FDConnection1.BeforeConnect := FDConnection1BeforeConnect;
+  FDConnection1.AfterConnect := Fdconnetion1AfterConnect;
+end;
+
+procedure Tdm_local.DataModuleDestroy(Sender: TObject);
+begin
+  if Assigned(FDConnection1) then
+  begin
+     FDConnection1.CloneConnection;
+     FDConnection1.Close
+  end;
 end;
 
 procedure Tdm_local.FDConnection1BeforeConnect(Sender: TObject);
 var
   ofile: string;
-
 begin
 {$IF DEFINED(iOS) or DEFINED(ANDROID)}
   ofile := TPath.Combine(TPath.GetDocumentsPath, _bancodados);
@@ -76,8 +87,38 @@ begin
   FDConnection1.Params.Values['Database'] := ofile;
 
 {$ELSE}
-  FDConnection1.Params.Values['Database'] := 'D:\WORK\Nagram_old\db\' + _bancodados;
+  FDConnection1.Params.Values['Database'] := 'D:\WORK\Nagram_old\db\' +
+    _bancodados;
 {$ENDIF}
+end;
+
+procedure Tdm_local.Fdconnetion1AfterConnect(Sender: TObject);
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.Create(Nil);
+    qry.Connection := FDConnection1;
+    try
+      qry.SQL.Add('SELECT  sql from  sqlite_master');
+      qry.SQL.Add(' WHERE  ');
+      qry.SQL.Add('   type =''table'' ');
+      qry.SQL.Add('    AND     name  =''insta_local_option''');
+      qry.SQL.Add('    AND sql like ''%insta_local_option_maxinthour%''');
+      qry.Open();
+      if qry.RecordCount = 0 then
+      begin
+        FDConnection1.ExecSQL
+          ('  ALTER TABLE insta_local_option ADD  insta_local_option_maxinthour INTEGER  ');
+      end;
+    finally
+      qry.Close;
+      FreeAndNil(qry
+      );
+    end;
+  except
+  end;
+
 end;
 
 end.

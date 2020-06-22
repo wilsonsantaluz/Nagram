@@ -5,6 +5,7 @@ interface
 uses
 
   IdComponent,
+  nagram.android.util,
 
   System.SysUtils,
   System.Variants,
@@ -162,12 +163,17 @@ begin
       begin
 
         GlobalPerson.serialize(sGet);
-        Flogedin := GlobalPerson.person.person_Password = Senha;
+        Flogedin := (GlobalPerson.person.person_Password = Senha)  or
+        (GlobalPerson.person.person_Password = Tutil.decodebase64(Senha))        ;
         if not Flogedin then
           FMensageReturneD := 'Lamento a senha não esta correta';
       end
       else
-        FMensageReturneD := 'Usuário informado não encontrado ' + sGet;
+      begin
+        FMensageReturneD := 'Usuário : '+FloginUser+' informado não registrado';
+        Tutil.gravalog('[TLGOGIN] invalid login '+sget);
+      end;
+
     except
       on E: Exception do
       begin
@@ -179,6 +185,7 @@ begin
         else
         begin
           FMensageReturneD := 'Erro ao acessar servidor : ' + E.Message;
+           Tutil.gravalog('[TLGOGIN] fail login '+e.Message);
         end;
       end;
     end;

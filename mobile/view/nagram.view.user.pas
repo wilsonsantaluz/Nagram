@@ -22,7 +22,7 @@ uses
   FMX.ListBox,
   FMX.Layouts,
   nagram.control.user,
-  nagram.model.user;
+  nagram.model.user, FMX.Ani;
 
 type
   TFUserView = class(TForm)
@@ -54,6 +54,7 @@ type
     libio: TListBoxItem;
     Label3: TLabel;
     memobio: TMemo;
+    FloatAnimation1: TFloatAnimation;
     procedure FormShow(Sender: TObject);
     procedure bt_closeClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -76,7 +77,6 @@ uses
   ,nagram.view.main
   ;
 {$R *.fmx}
-{$R *.NmXhdpiPh.fmx ANDROID}
 
 procedure TFUserView.FormClose(Sender: TObject; var Action: TCloseAction);
 begin

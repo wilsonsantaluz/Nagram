@@ -4,6 +4,7 @@ interface
 
 uses
   System.classes,
+  System.NetEncoding,
   Rtti,
   math,
   System.IOUtils,
@@ -28,7 +29,9 @@ type
 
     class procedure gravalog(mensagem: string);
     class function classToJson(oclass, oclassinfo: pointer): TJSONObject;
-    class procedure finalizeArray(var value:TObject);
+    class procedure finalizeArray(var Value: TObject);
+    class function decodebase64(Value: string): string;
+    class function encodebase64(Value: string): string;
   end;
 
 implementation
@@ -136,9 +139,57 @@ begin
   end;
 end;
 
-class procedure Tutil.finalizeArray(var value: TObject);
+class function Tutil.decodebase64(Value: string): string;
+var
+  instream: TstringStream;
+  decodedstrean: TstringStream;
 begin
- //**//
+  Result := '';
+  try
+    if Value <> '' then
+    begin
+      instream := TstringStream.Create(Value);
+      decodedstrean := TstringStream.Create('');
+      try
+        instream.Position := 0;
+        TNetEncoding.Base64.Decode(instream, decodedstrean);
+        Result := decodedstrean.DataString;
+      finally
+        FreeAndNil(instream);
+        FreeAndNil(decodedstrean);
+      end;
+    end;
+  except
+  end;
+end;
+
+class function Tutil.encodebase64(Value: string): string;
+var
+  encodedstream: TstringStream;
+  instream: TstringStream;
+begin
+  Result := '';
+  try
+    if Value <> '' then
+    begin
+      try
+        encodedstream := TstringStream.Create('');
+        instream := TstringStream.Create(Value);
+        TNetEncoding.Base64.Encode(instream, encodedstream);
+        Result := encodedstream.DataString
+      finally
+        FreeAndNil(encodedstream);
+        FreeAndNil(instream);
+      end;
+    end;
+  except
+
+  end;
+end;
+
+class procedure Tutil.finalizeArray(var Value: TObject);
+begin
+  // **//
 end;
 
 class function Tutil.formatvalue(Value: double): string;

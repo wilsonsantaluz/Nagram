@@ -4,10 +4,11 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes,
-  System.Variants,
+  System.Variants,nagram.android.util,
+
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Edit, FMX.ListBox, FMX.Layouts,
-  nagram.model.person, System.ImageList, FMX.ImgList, FMX.Effects;
+  nagram.model.person, System.ImageList, FMX.ImgList, FMX.Effects, FMX.Ani;
 
 type
   TFviewPerson = class(TForm)
@@ -48,6 +49,7 @@ type
     lblpersoncad: TLabel;
     AniIndicator1: TAniIndicator;
     rectbody: TRectangle;
+    FloatAnimation1: TFloatAnimation;
     procedure btcloseClick(Sender: TObject);
     procedure edtloginChange(Sender: TObject);
     procedure btsavepersonClick(Sender: TObject);

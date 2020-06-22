@@ -7,6 +7,8 @@ uses
   FMX.Types,
   System.Types,
   FMX.ListView.Types,
+  nagram.view.releasenotes,
+
   FMX.ListView.Appearances,
   FMX.ListView.Adapters.Base,
   Data.Bind.EngExt,
@@ -67,6 +69,7 @@ uses
   FMX.Platform,
   FMX.DialogService.Async,
   nagram.control.localoption,
+  nagram.dao.action,
   FMX.Forms,
   FMX.Effects,
   FMX.Dialogs,
@@ -105,8 +108,8 @@ type
     btstop: TSpeedButton;
     tabconfig: TTabItem;
     tabcontrolconfig: TTabControl;
-    tabsubconfig1: TTabItem;
-    ToolBar2: TToolBar;
+    tabconfigmain: TTabItem;
+    toomainconfig: TToolBar;
     SettingsMain: TLabel;
     lstdadosgerais: TListBox;
     AccountInfo: TListBoxGroupHeader;
@@ -161,7 +164,7 @@ type
     pnllogs: TToolBar;
     memolog: TMemo;
     tabatividades: TTabItem;
-    ToolBar1: TToolBar;
+    tooativaidades: TToolBar;
     lblactions: TLabel;
     btrefreshactions: TSpeedButton;
     lstactions: TListView;
@@ -200,6 +203,13 @@ type
     lbinfouser: TLabel;
     bt_updatecomment: TSpeedButton;
     flapnexec: TFloatAnimation;
+    ColorAnimation2: TColorAnimation;
+    flatoooperacao: TFloatAnimation;
+    aninbrowser: TAniIndicator;
+    ListBoxItem4: TListBoxItem;
+    Label3: TLabel;
+    edtmaxinthour: TEdit;
+    lblversion: TLabel;
     procedure btnavigateClick(Sender: TObject);
     procedure btstopClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -244,7 +254,7 @@ type
     procedure btrefreshtagsClick(Sender: TObject);
     procedure btatualizarcomentariosClick(Sender: TObject);
     procedure btrefreshactionsClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var action: TCloseAction);
     procedure btoptionsClick(Sender: TObject);
     procedure lilogoutClick(Sender: TObject);
     procedure liupdateallClick(Sender: TObject);
@@ -259,6 +269,8 @@ type
     procedure ListBoxItem1Click(Sender: TObject);
     procedure bt_updatecommentClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure tabconfigClick(Sender: TObject);
+    procedure liespaceClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -297,10 +309,10 @@ uses
   nagram.dao.comment,
   nagram.control.main,
   nagram.model.comment,
-  nagram.model.Action,
-  nagram.control.Action,
+  nagram.model.action,
+  nagram.control.action,
   nagram.model.user,
-  nagram.view.Action,
+  nagram.view.action,
   nagram.control.user,
   nagram.view.user,
   nagram.view.person,
@@ -358,7 +370,7 @@ begin
 
     TaskName := TListViewItem(lsthastags.Selected).Text;
     try
-
+      btremovertag.Visible := false;
       FmainController.deleteHashTag(TListViewItem(lsthastags.Selected).Tag);
       btremovertag.Visible := lsthastags.Selected <> nil;
       FmainController.setViewHashTag(Sender);
@@ -382,7 +394,7 @@ end;
 procedure Tfmain.btsalvarcomentarioClick(Sender: TObject);
 begin
   FmainController.saveComent();
-  btbackeditcomentarioClick(sender);
+  btbackeditcomentarioClick(Sender);
   FmainController.setViewComment(nil);
 
 end;
@@ -404,6 +416,8 @@ begin
   btnavigate.ImageIndex := 12;
   btstop.ImageIndex := 6;
   Label9.Visible := true;
+  aninbrowser.Visible := false;
+  aninbrowser.Enabled := false;
 end;
 { ------------------------------------------------------------------------------ }
 
@@ -471,6 +485,7 @@ begin
     try
       FmainController.deleteComment(Fid);
       FmainController.setViewComment(Sender);
+      btdeletecoment.Visible := false;
       ShowMessage('Comentario excluido.');
       FcommentId := -1;
     except
@@ -486,12 +501,16 @@ end;
 procedure Tfmain.btnavigateClick(Sender: TObject);
 var
   i: Integer;
+  olocaloption: TLocalOptionController;
 begin
   try
     AniIndicator1.Visible := true;
     AniIndicator1.Enabled := true;
+    aninbrowser.Visible := true;
+    aninbrowser.Enabled := true;
+    aninbrowser.BringToFront;
     LogOut;
-
+    i := TActionDao.getCountLikeHour;
     Fnavegador.HashsTags.clear;
     if lsthastags.ItemCount = 0 then
       raise exception.Create('[Erro 236 ] Nehuma hashtag  foi definida');
@@ -502,6 +521,14 @@ begin
     if GlobalPerson.person.person_insta_password = '' then
       raise exception.Create
         ('[Erro 242] a senha para o instagram não informada ');
+    olocaloption := TLocalOptionController.Create;
+    if olocaloption.localoption.Maxinthour < 1 then
+      raise exception.Create('[Erro 521] Maximo de interações menor que 1');
+
+    if i >= olocaloption.localoption.Maxinthour then
+      raise exception.Create
+        ('[Erro 521] Maximo de interações na ultima hora atingido');
+
     for i := 0 to lsthastags.ItemCount - 1 do
     begin
       Fnavegador.HashsTags.add(TListViewItem(lsthastags.Items[i]).Text);
@@ -529,6 +556,8 @@ begin
       AniIndicator1.Visible := false;
       btstop.Enabled := false;
       btnavigate.Enabled := true;
+      aninbrowser.Visible := false;
+      aninbrowser.Enabled := false;
       Label9.Text := 'Inativo';
     end;
   end;
@@ -538,6 +567,7 @@ procedure Tfmain.btoptionsClick(Sender: TObject);
 begin
   OverflowMenu.Visible := not OverflowMenu.Visible;
   brs.Visible := not OverflowMenu.Visible;
+  OverflowMenu.BringToFront;
   if OverflowMenu.Visible then
   begin
     OverflowMenu.ApplyStyleLookup;
@@ -551,7 +581,7 @@ begin
 end;
 
 { ------------------------------------------------------------------------------ }
-procedure Tfmain.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure Tfmain.FormClose(Sender: TObject; var action: TCloseAction);
 begin
   fmain := nil;
 end;
@@ -564,12 +594,17 @@ begin
     OverflowMenu.Visible := false;
     OverflowMenu.Position.X := 5;
     OverflowMenu.Position.Y := 37;
-    pnexec.Visible := false;
     tabmaster.ActiveTab := taboperacao;
     tabcontrolcomentarios.ActiveTab := tabsubcomentariosview;
     btremovertag.Visible := false;
     btdeletecoment.Visible := false;
     setBrowserControl();
+    aninbrowser.Visible := false;
+    aninbrowser.Enabled := false;
+    aninbrowser.BringToFront;
+    AniIndicator1.Visible := false;
+    AniIndicator1.Enabled := false;
+    pnexec.Visible := false;
 
   except
     on e: exception do
@@ -702,6 +737,13 @@ begin
 
 end;
 
+procedure Tfmain.liespaceClick(Sender: TObject);
+begin
+  if not assigned(FreleaseNotes) then
+    FreleaseNotes := tFreleaseNotes.Create(Nil);
+  FreleaseNotes.Show;
+end;
+
 procedure Tfmain.lilogoutClick(Sender: TObject);
 begin
   btstopClick((Nil));
@@ -814,7 +856,7 @@ end;
 
 procedure Tfmain.Button1Click(Sender: TObject);
 begin
-  pnexec.Visible:=true;
+  pnexec.Visible := true;
   lbexec.Text := 'Comentario salvo';
   flapnexec.Start;
 end;
@@ -827,6 +869,12 @@ end;
 procedure Tfmain.swcurtirpostagemClick(Sender: TObject);
 begin
   FmainController.persistLocalOptions();
+end;
+
+procedure Tfmain.tabconfigClick(Sender: TObject);
+begin
+  tabcontrolconfig.ActiveTab := tabconfigmain;
+  tabcontrolcomentarios.ActiveTab := tabsubcomentariosview;
 end;
 
 procedure Tfmain.TmLabelTimer(Sender: TObject);
@@ -870,6 +918,7 @@ begin
   FmainController.sincronizehashtags;
   lbexec.Text := 'Preparando tela...';
   FmainController.setAllViews;
+  pnexec.Visible := false;
 end;
 
 procedure Tfmain.setBrowserControl();
@@ -884,9 +933,10 @@ begin
 
 {$ENDIF}
     brs.Parent := taboperacao;
+    brs.SendToBack;
     brs.Align := TAlignLayout.client;
     brs.CanFocus := false;
-    brs.Visible := false;
+    brs.Visible := true;
     Fnavegador := TinstaNavegador.Create(brs, memolog);
     if not assigned(dm_local) then
       dm_local := Tdm_local.Create(Application);
@@ -914,10 +964,9 @@ begin
     Self.Updated;
     GlobalPerson.sincronizar;
     NgDeviceInfo.updateDeviceInfo();
-    AniIndicator1.Enabled := false;
-    pnexec.Visible := false;
     brs.Visible := true;
-    AniIndicator1.Visible := false;
+    brs.SendToBack;
+    AniIndicator1.BringToFront;
     lbinfouser.Text := 'Bem vindo ' + GlobalPerson.person.person_name;
   Except
     on e: exception do

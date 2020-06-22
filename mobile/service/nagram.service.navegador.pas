@@ -11,6 +11,7 @@ uses
   FMX.Types,
   System.JSON,
   SG.ScriptGate,
+  nagram.dao.action,
   math,
   FMX.WebBrowser,
   nagram.android.util,
@@ -98,6 +99,7 @@ type
     procedure navegarPublicacao();
     function parsevalue(value: string): string;
     procedure setTimerInterval(value: integer);
+    function checkInteracoes: boolean;
   public
     procedure dologin();
     procedure startSpan();
@@ -111,6 +113,7 @@ type
     property user: string read Fuser write Fuser;
     property Password: string read Fpassword write Fpassword;
     property Finalizado: boolean read Ffinalizado write Ffinalizado;
+
   end;
 
 const
@@ -141,7 +144,11 @@ begin
     end;
   except
     on e: Exception do
+    BEGIN
+      Tutil.gravalog('[TNAVEGADOR] E148 ' + e.Message);
       logop('[E142] ' + e.Message);
+    END;
+
   end;
 end;
 
@@ -490,6 +497,7 @@ begin
     on e: Exception do
     begin
       logop('[E161] -> ' + e.Message + ' hash tag -> ' + FactualHashTag);
+      Tutil.gravalog('[TNAVEGADOR] E496 ' + e.Message);
     end;
 
   end;
@@ -749,6 +757,7 @@ begin
     except
       on e: Exception do
       begin
+        Tutil.gravalog('[TNAVEGADOR] E755 ' + e.Message);
         logop('[E714] -> ' + e.Message + ' hash tag -> ' + FactualHashTag +
           ' Etapa :');
       end;
@@ -765,12 +774,29 @@ begin
     FmemoLog.Lines.Add(value);
 end;
 
+function TinstaNavegador.checkInteracoes: boolean;
+begin
+
+  result := true;
+  try
+    result := TActionDao.getCountLikeHour <=
+      Flocaloption.localoption.Maxinthour;
+  except
+    on e: Exception do
+      Tutil.gravalog('[TNAVEGADOR] E785 ' + e.Message);
+  end;
+
+end;
+
 { ------------------------------------------------------------------------------ }
 procedure TinstaNavegador.tmexecTimer(Sender: Tobject);
+var
+  valinteracoes: boolean;
 begin
   try
     Ftimer.Enabled := false;
-    if (FindexHashTag <= FHashsTags.Count) then
+    valinteracoes := checkInteracoes;
+    if (FindexHashTag <= FHashsTags.Count) and (valinteracoes) then
     begin
       try
         if (not Fstop) then
@@ -780,11 +806,15 @@ begin
       finally
         Ftimer.Enabled := true;
       end;
-
     end
     else
     begin
       dofinalize();
+      if not valinteracoes then
+      begin
+        Tutil.gravalog('[TNAVEGADOR] Finalizado por atingir o limite ');
+        logop(' Finalizado por atingir o limite ');
+      end;
     end;
     if Fstop then
     begin
@@ -792,7 +822,10 @@ begin
     end;
   except
     on e: Exception do
+    begin
+      Tutil.gravalog('[TNAVEGADOR] ERRO MAIN ' + e.Message);
       logop(e.Message);
+    end;
 
   end;
 

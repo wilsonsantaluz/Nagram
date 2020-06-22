@@ -18,6 +18,7 @@ type
     FDaysStart: String;
     FHoursStart: String;
     FDelayExecution:integer;
+    Fmaxinthour:Integer;
   public
 
     property SendComent: integer read FSendComent write FSendComent;
@@ -29,6 +30,7 @@ type
     property DaysStart: String read FDaysStart write FDaysStart;
     property HoursStart: String read FHoursStart write FHoursStart;
     property DelayExecution: integer read FDelayExecution write FDelayExecution;
+    property Maxinthour: integer read Fmaxinthour write Fmaxinthour ;
    constructor create;
   end;
 
@@ -45,6 +47,7 @@ begin
     FDelayNavigation:=4;
     FDaysStart:='';
     FHoursStart:='';
+    Maxinthour:=0;
     FDelayExecution:=120;
 end;
 

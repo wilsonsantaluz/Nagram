@@ -65,6 +65,9 @@ begin
         .AsInteger;
       result.HashTagDept := qry.FieldByName('insta_local_option_hashtag_dept')
         .AsInteger;
+
+       result.Maxinthour := qry.FieldByName('insta_local_option_maxinthour')
+        .AsInteger;
       result.DelayNavigation :=
         qry.FieldByName('insta_local_option_delay_navigation').AsInteger;
       result.DaysStart := qry.FieldByName
@@ -105,6 +108,7 @@ begin
       qry.SQL.Add('  ,instal_local_option_days_start');
       qry.SQL.Add('  ,insta_local_option_hours_start');
       qry.SQL.Add('  ,insta_local_option_delay_execution');
+      qry.SQL.Add('  ,insta_local_option_maxinthour');
 
       qry.SQL.Add(' )');
       qry.SQL.Add('VALUES ');
@@ -118,6 +122,7 @@ begin
       qry.SQL.Add('  ,' + QuotedStr(value.DaysStart));
       qry.SQL.Add('  ,' + QuotedStr(value.HoursStart));
       qry.SQL.Add('  ,' + inttostr(value.DelayExecution));
+      qry.SQL.Add('  ,' + inttostr(value.Maxinthour));
 
       qry.SQL.Add(' );');
       qry.ExecSQL;
@@ -144,6 +149,10 @@ begin
         QuotedStr(value.HoursStart));
       qry.SQL.Add('  ,insta_local_option_delay_execution  = ' +
         inttostr(value.DelayExecution));
+
+
+        qry.SQL.Add('  ,insta_local_option_maxinthour  = ' +
+        inttostr(value.Maxinthour));
 
       qry.ExecSQL;
     end;

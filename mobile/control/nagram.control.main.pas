@@ -73,6 +73,7 @@ type
 
     property logado: Boolean read Flogado write Flogado;
     property FormView: TForm read FFormView write FFormView;
+
     constructor create;
   end;
 
@@ -197,6 +198,10 @@ begin
       valint(((FFormView) as Tfmain).edtdaysunfolow.Text);
     Flocaloption.localoption.HashTagDept :=
       valint(((FFormView) as Tfmain).edtpesquisashashtag.Text);
+
+    Flocaloption.localoption.Maxinthour  :=
+      valint(((FFormView) as Tfmain).edtmaxinthour.Text);
+
     Flocaloption.localoption.DelayNavigation :=
       valint(((FFormView) as Tfmain).edtdelaynavigation.Text);
     Flocaloption.localoption.DelayExecution :=
@@ -364,6 +369,13 @@ begin
     finally
       if assigned(oactions) then
         FreeAndNil(oactions);
+
+      if not FActionController.initialLoad then
+      begin
+        ((FFormView) as Tfmain).pnexec.Visible := true;
+        ((FFormView) as Tfmain).lbexec.Text := 'Ações atualizadas no servidor';
+        ((FFormView) as Tfmain).flapnexec.Start;
+      end;
     end;
   except
     on e: exception do
@@ -401,8 +413,9 @@ begin
         ' Comentario(s)   carregado(s)';
       if not FCommentController.initialLoad then
       begin
-        ((FFormView) as Tfmain).pnexec.Visible:=true; 
-        ((FFormView) as Tfmain).lbexec.Text := 'Comentario salvo';
+        ((FFormView) as Tfmain).pnexec.Visible := true;
+        ((FFormView) as Tfmain).lbexec.Text :=
+          'Comentario(s) atualizado(s) no servidor';
         ((FFormView) as Tfmain).flapnexec.Start;
       end;
 
@@ -446,13 +459,14 @@ begin
       if assigned(ohashTags) then
         FreeAndNil(ohashTags);
 
-         if not FHashTagController.initialLoad then
+      if not FHashTagController.initialLoad then
       begin
-        ((FFormView) as Tfmain).pnexec.Visible:=true; 
-        ((FFormView) as Tfmain).lbexec.Text := 'Hash tag salva !';
+        ((FFormView) as Tfmain).pnexec.Visible := true;
+        ((FFormView) as Tfmain).lbexec.Text :=
+          'Hash tag  atualizada(s) no servidor !';
         ((FFormView) as Tfmain).flapnexec.Start;
       end;
-  
+
     end;
   except
     on e: exception do
@@ -471,6 +485,7 @@ begin
     ((FFormView) as Tfmain).edtpesquisashashtag.OnChange := Nil;
     ((FFormView) as Tfmain).edtdelaynavigation.OnChange := Nil;
     ((FFormView) as Tfmain).edtdelayexecution.OnChange := Nil;
+    ((FFormView) as Tfmain).edtmaxinthour.OnChange := Nil;
 
     ((FFormView) as Tfmain).swcomentario.IsChecked :=
       Flocaloption.localoption.SendComent = 1;
@@ -478,6 +493,10 @@ begin
       Flocaloption.localoption.SendLike = 1;
     ((FFormView) as Tfmain).edtdaysunfolow.Text :=
       inttostr(Flocaloption.localoption.DaysUnfolow);
+
+    ((FFormView) as Tfmain).edtmaxinthour.Text :=
+      inttostr(Flocaloption.localoption.maxinthour);
+
     ((FFormView) as Tfmain).edtpesquisashashtag.Text :=
       inttostr(Flocaloption.localoption.HashTagDept);
     ((FFormView) as Tfmain).edtdelaynavigation.Text :=
@@ -491,6 +510,8 @@ begin
     ((FFormView) as Tfmain).edtpesquisashashtag.OnChange := dochangeoperacional;
     ((FFormView) as Tfmain).edtdelaynavigation.OnChange := dochangeoperacional;
     ((FFormView) as Tfmain).edtdelayexecution.OnChange := dochangeoperacional;
+    ((FFormView) as Tfmain).edtmaxinthour.OnChange := dochangeoperacional;
+
   except
     on e: exception do
       Tutil.gravalog('[TMAIN-447]' + e.message);
@@ -500,7 +521,6 @@ end;
 
 { ------------------------------------------------------------------------------ }
 procedure TMainController.setViewUser(Sender: TObject);
-
 var
   oitem: TListViewItem;
   i: integer;
@@ -535,6 +555,14 @@ begin
     finally
       if assigned(oUsers) then
         FreeAndNil(oUsers);
+
+      if not FUserController.initialLoad then
+      begin
+        ((FFormView) as Tfmain).pnexec.Visible := true;
+        ((FFormView) as Tfmain).lbexec.Text :=
+          'Usuario(s) atualizado(s) no servidor';
+        ((FFormView) as Tfmain).flapnexec.Start;
+      end;
     end;
   except
     on e: exception do

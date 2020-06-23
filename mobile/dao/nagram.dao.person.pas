@@ -51,13 +51,14 @@ var
   qry: TFDQuery;
 begin
   try
+    result := Tperson.Create;
     qry := TFDQuery.Create(nil);
     qry.Connection := dm_local.FDConnection1;
     try
       qry.SQL.Add('SELECT   * FROM   person');
 
       qry.open;
-      result := Tperson.Create;
+
       result.person_uuid := qry.FieldByName('person_uuid').AsString;
       result.person_date := qry.FieldByName('person_date').AsFloat;
       result.person_name := qry.FieldByName('person_name').AsString;

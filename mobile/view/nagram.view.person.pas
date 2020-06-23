@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes,
-  System.Variants,nagram.android.util,
+  System.Variants, nagram.android.util,
 
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Edit, FMX.ListBox, FMX.Layouts,
@@ -103,16 +103,24 @@ begin
   try
     result := false;
     if edtlogin.Text = '' then
-      raise Exception.Create('Login deve ser informado');
-    if edtsenhaconta.Text = '' then
-      raise Exception.Create('Senha  deve ser informada');
+    begin
+      raise Exception.Create(' login deve ser informado');
 
+    end;
+    if edtsenhaconta.Text = '' then
+    begin
+      raise Exception.Create('Senha  deve ser informada');
+    end;
     if edtnomefull.Text = '' then
       raise Exception.Create('Nome deve ser informada');
     if edtcontainsta.Text = '' then
+    begin
       raise Exception.Create('Usuario do instagram deve ser informado');
+    end;
     if edtsenhainsta.Text = '' then
+    begin
       raise Exception.Create('Senha do instagram deve ser informada');
+    end;
     if edtemail.Text = '' then
       raise Exception.Create('Email deve ser informado');
     if edtFone.Text = '' then
@@ -154,6 +162,7 @@ procedure TFviewPerson.btsavepersonClick(Sender: TObject);
 var
   amsg: string;
 begin
+  btsaveperson.Enabled := false;
   AniIndicator1.Visible := true;
   AniIndicator1.Enabled := true;
   lblpersoncad.Text := 'Salvando dados';
@@ -166,8 +175,8 @@ begin
     AniIndicator1.Visible := false;
     AniIndicator1.Enabled := false;
     lblpersoncad.Text := 'Cadastro de contas';
+    btsaveperson.Enabled := true;
   end;
 end;
-
 
 end.

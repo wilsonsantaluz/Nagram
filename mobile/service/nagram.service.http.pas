@@ -38,6 +38,7 @@ type
   private
 
     FloginUser: String;
+    FreturnCod:Integer;
     Findice: Integer;
     FbeforeExecute: TbeforeExecute;
     FMensageReturneD: string;
@@ -59,6 +60,7 @@ type
     function decompress(value: TStream):TStream;
 
     property LoginUser: string read FloginUser write FloginUser;
+    property returnCod:integer read FreturnCod write FreturnCod;
     property Senha: string read Fsenha write Fsenha;
     property Finalized: Boolean read FFinalized write FFinalized;
     property Logedin: Boolean read Flogedin write Flogedin;
@@ -159,24 +161,30 @@ begin
         sGet:=TStringStream(aresponse).DataString;
       except
       end;
+      FreturnCod:=500;
       if pos('person_uuid', sGet) > 0 then
       begin
-
+        FreturnCod:=200;
         GlobalPerson.serialize(sGet);
         Flogedin := (GlobalPerson.person.person_Password = Senha)  or
         (GlobalPerson.person.person_Password = Tutil.decodebase64(Senha))        ;
         if not Flogedin then
-          FMensageReturneD := 'Lamento a senha não esta correta';
+        begin
+          FMensageReturned := 'Lamento a senha não esta correta';
+          FreturnCod:=502;
+        end;
       end
       else
       begin
-        FMensageReturneD := 'Usuário : '+FloginUser+' informado não registrado';
+        FreturnCod:=501;
+        FMensageReturned := 'Usuário : '+FloginUser+' informado não registrado  cadastre-se no sistema através do botão "Criar conta"';
         Tutil.gravalog('[TLGOGIN] invalid login '+sget);
       end;
 
     except
       on E: Exception do
       begin
+        FreturnCod:=5001;
         Flogedin := false;
         if pos('forbidden', AnsiLowerCase(E.Message)) > 0 then
         begin

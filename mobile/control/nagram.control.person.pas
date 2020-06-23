@@ -76,6 +76,10 @@ begin
       FreeAndNil(odao)
     End;
   except
+    on e:exception  do
+    begin
+      Tutil.gravalog('[TPERSON] E 81'+E.Message);
+    end;
   end;
 end;
 
@@ -96,6 +100,8 @@ begin
       FreeAndNil(odao)
     End;
   except
+      ON E:Exception do
+      Tutil.gravalog('[TPERSON] E104 '+E.Message)  ;
   end;
 end;
 
@@ -113,6 +119,8 @@ begin
         setDataToserver(amsg);
     end;
   except
+    ON E:Exception do
+      Tutil.gravalog('[TPERSON] E120 '+E.Message)  ;
   end;
 end;
 
@@ -169,7 +177,7 @@ begin
     setLocalPerson(Nil);
   except
     on e: Exception do
-      Tutil.gravalog('[172]' + e.Message);
+      Tutil.gravalog('[[TCONTROLPERSON 172]' + e.Message);
   end;
 end;
 
@@ -220,7 +228,8 @@ Begin
   except
     on e: Exception do
     begin
-      amsg := e.Message;
+      amsg :='Não foi possivel atualizar no momento';
+      Tutil.gravalog('[TCONTROLPERSON]E228 '+E.Message);
     end;
   end;
 end;
@@ -257,6 +266,11 @@ Begin
       FreeAndNil(Fgetdata);
     end;
   except
+     on e: Exception do
+    begin
+
+      Tutil.gravalog('[TCONTROLPERSON]E268 '+E.Message);
+    end;
   end;
 end;
 

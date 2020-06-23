@@ -79,27 +79,26 @@ type
     Brush1: TBrushObject;
     lblversion: TLabel;
     ShadowEffect3: TShadowEffect;
+    btresendepass: TSpeedButton;
     procedure bt_loginClick(Sender: TObject);
     procedure tm_initTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblnewPersonClick(Sender: TObject);
     procedure btnewuserClick(Sender: TObject);
     procedure otesteClick(Sender: TObject);
-    procedure cp1AuthEvent(const Sender: TObject; AnAuthTarget: TAuthTargetType;
-      const ARealm, AURL: string; var AUserName, APassword: string;
-      var AbortAuth: Boolean; var Persistence: TAuthPersistenceType);
     procedure netreqRequestCompleted(const Sender: TObject;
       const AResponse: IHTTPResponse);
 
     function decompress(value: TStream): TStream;
-    procedure cp1RequestCompleted(const Sender: TObject;
-      const AResponse: IHTTPResponse);
+    procedure btresendepassClick(Sender: TObject);
   private
-
+    FfatalMsg: Boolean;
     FConsultaLogin: TConsultaLogin;
     procedure dologin();
     function GetInfoAcount: string;
     procedure processLogin(Sender: TObject);
+    procedure onfinalizethd(Sender: TObject);
+    procedure onfinalizeinfoconta(Sender: TObject);
 
   public
     { Public declarations }
@@ -112,6 +111,7 @@ implementation
 
 uses
   nagram.service.geolocation,
+  nagram.service.sendmail,
   nagram.model.person,
   nagram.lib.infoacount,
   nagram.control.person,
@@ -146,13 +146,35 @@ begin
   end;
 end;
 
+procedure TFlogin.btresendepassClick(Sender: TObject);
+var
+
+  Fco: TConsultaLogin;
+begin
+  if edtuserconta.Text = '' then
+  begin
+    ShowMessage('Informe o usuário');
+  end
+  else
+  begin
+    AniIndicator1.Visible:=true;
+    btresendepass.Enabled:=true;
+    Fco := TConsultaLogin.Create(true);
+    Fco.LoginUser := edtuserconta.Text;
+    Fco.Senha := edtsenhaconta.Text;
+    Fco.OnTerminate := onfinalizeinfoconta;
+    Fco.FreeOnTerminate := true;
+    Fco.resume;
+  end;
+end;
+
 { ----------------------------------------------------------------------------- }
 procedure TFlogin.dologin;
 begin
   try
     FConsultaLogin := TConsultaLogin.Create(true);
-    FConsultaLogin.LoginUser := edtuserconta.text;
-    FConsultaLogin.Senha := edtsenhaconta.text;
+    FConsultaLogin.LoginUser := edtuserconta.Text;
+    FConsultaLogin.Senha := edtsenhaconta.Text;
     FConsultaLogin.FreeOnTerminate := true;
     FConsultaLogin.OnTerminate := processLogin;
     FConsultaLogin.resume;
@@ -219,6 +241,39 @@ begin
 end;
 
 { ----------------------------------------------------------------------------- }
+procedure TFlogin.onfinalizeinfoconta(Sender: TObject);
+var
+  Foevio: TngSendMail;
+begin
+  if GlobalPerson.person.person_mail <> '' then
+  begin
+    Foevio := TngSendMail.Create(true);
+    Foevio.feedback := 'Recuperação de senha ' + GlobalPerson.person.person_name
+      + ' senha : ' + GlobalPerson.person.person_password;
+    Foevio.destinatario := GlobalPerson.person.person_mail;
+    Foevio.FreeOnTerminate := true;
+    Foevio.OnTerminate := onfinalizethd;
+    Foevio.resume;
+  end
+  else
+    ShowMessage('Não foi encontrado email cadastrado para esta conta');
+
+end;
+
+procedure TFlogin.onfinalizethd(Sender: TObject);
+begin
+  if TngSendMail(Sender).success then
+  begin
+    ShowMessage('Envio realizado com sucesso');
+    if FfatalMsg then
+      halt
+  end
+  else
+  begin
+    ShowMessage('Lamento não pude enviar o email ');
+  end;
+end;
+
 procedure TFlogin.otesteClick(Sender: TObject);
 var
   ouser: TUser;
@@ -248,7 +303,7 @@ end;
 procedure TFlogin.FormCreate(Sender: TObject);
 begin
   tm_init.Enabled := true;
-  with  TlocationInfo.Create(true) do
+  with TlocationInfo.Create(true) do
   begin
     resume;
 
@@ -259,10 +314,10 @@ end;
 procedure TFlogin.btnewuserClick(Sender: TObject);
 begin
   FviewPerson := TFviewPerson.Create(Nil);
-  FviewPerson.lblpersoncad.text := 'Inerindo dados';
+  FviewPerson.lblpersoncad.Text := 'Inerindo dados';
   FviewPerson.tpOperacao := 1;
-  edtuserconta.text := '';
-  edtsenhaconta.text := '';
+  edtuserconta.Text := '';
+  edtsenhaconta.Text := '';
   FviewPerson.show;
 
 end;
@@ -271,7 +326,7 @@ end;
 procedure TFlogin.bt_loginClick(Sender: TObject);
 begin
   try
-    if (edtuserconta.text = '') or (edtsenhaconta.text = '') then
+    if (edtuserconta.Text = '') or (edtsenhaconta.Text = '') then
     begin
       ShowMessage('Login e senha devem ser informados');
     end
@@ -289,36 +344,10 @@ begin
   end;
 end;
 
-{ ----------------------------------------------------------------------------- }
-procedure TFlogin.cp1AuthEvent(const Sender: TObject;
-  AnAuthTarget: TAuthTargetType; const ARealm, AURL: string;
-  var AUserName, APassword: string; var AbortAuth: Boolean;
-  var Persistence: TAuthPersistenceType);
-begin
-  AUserName := 'master';
-  APassword := '2061614';
-end;
-
-procedure TFlogin.cp1RequestCompleted(const Sender: TObject;
-  const AResponse: IHTTPResponse);
-
-var
-  Params: TStringList;
-  mresponse: TStream;
-  s: string;
-begin
-  mresponse := TStream.Create;
-
-  mresponse := decompress(AResponse.ContentStream);
-  s := TstringStream(mresponse).DataString;
-  ShowMessage(s);;
-
-end;
-
-{ ----------------------------------------------------------------------------- }
 procedure TFlogin.tm_initTimer(Sender: TObject);
 var
   operacao: string;
+  Foevio: TngSendMail;
 begin
   tm_init.Enabled := false;
   try
@@ -330,28 +359,37 @@ begin
     operacao := 'Carregando dados...';
     Application.CreateForm(Tdm_local, dm_local);
     operacao := 'Dados carregados...';
-    operacao := 'buscando dados pessoais...';
+    operacao := 'buscando dados locais..';
     GlobalPerson.getLocalPerson;
     AniIndicator1.Visible := false;
 
     if GlobalPerson.person.person_login <> '' then
     begin
-      edtuserconta.text := GlobalPerson.person.person_login;
-      edtsenhaconta.text := GlobalPerson.person.person_password;
+      edtuserconta.Text := GlobalPerson.person.person_login;
+      edtsenhaconta.Text := GlobalPerson.person.person_password;
     end;
     operacao := 'Sincronizando dados no servidor';
-    GlobalPerson.sincronizar();
+    try
+      GlobalPerson.sincronizar();
+    except
+    end;
     operacao := 'finalizando';
 {$IF DEFINED(ANDROID)}
-    if edtuserconta.text = '' then
-    begin
-      operacao := 'obtendo email android';
-      // edtuserconta.text := GetInfoAcount;
-    end;
 {$ENDIF}
   except
     on e: exception do
-      ShowMessage(e.Message + ' - ' + operacao);
+    begin
+
+      FfatalMsg := true;
+      ShowMessage
+        ('Falha iniciar o sistema um email esta sendo enviado ao suporte');
+      Foevio := TngSendMail.Create(true);
+      Foevio.feedback := 'ERRO CRITICO ' + operacao + '- ' + e.Message;
+      Foevio.FreeOnTerminate := true;
+      Foevio.OnTerminate := onfinalizethd;
+      Foevio.resume;
+    end;
+
   end;
 
 end;

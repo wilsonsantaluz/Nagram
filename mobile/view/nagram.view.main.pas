@@ -106,7 +106,7 @@ type
     pnloperacao: TToolBar;
     Rectangle5: TRectangle;
     btnavigate: TSpeedButton;
-    Label9: TLabel;
+    lblinteracao: TLabel;
     btstop: TSpeedButton;
     tabconfig: TTabItem;
     tabcontrolconfig: TTabControl;
@@ -194,7 +194,6 @@ type
     flapnexec: TFloatAnimation;
     ColorAnimation2: TColorAnimation;
     flatoooperacao: TFloatAnimation;
-    aninbrowser: TAniIndicator;
     ListBoxItem4: TListBoxItem;
     Label3: TLabel;
     edtmaxinthour: TEdit;
@@ -210,6 +209,7 @@ type
     sweoverflowmenu: TShadowEffect;
     efcoverflowmenu: TFloatAnimation;
     Label4: TLabel;
+    aninbrowser: TAniIndicator;
     procedure btnavigateClick(Sender: TObject);
     procedure btstopClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -269,6 +269,7 @@ type
     procedure liespaceClick(Sender: TObject);
     procedure MultiView1StartShowing(Sender: TObject);
     procedure MultiView1StartHiding(Sender: TObject);
+    procedure lblversionClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -409,15 +410,16 @@ end;
 procedure Tfmain.btstopClick(Sender: TObject);
 begin
   Fnavegador.stopall;
+  brs.Visible := false;
   AniIndicator1.Enabled := false;
   AniIndicator1.Visible := false;
   btnavigate.Enabled := True;
   btstop.Enabled := false;
-  Label9.Text := 'Processo interompido.';
+  lblinteracao.Text := 'Processo interompido.';
   TmLabel.Enabled := false;
   btnavigate.ImageIndex := 12;
   btstop.ImageIndex := 6;
-  Label9.Visible := True;
+  lblinteracao.Visible := True;
   aninbrowser.Visible := false;
   aninbrowser.Enabled := false;
 end;
@@ -525,19 +527,67 @@ begin
     i := TActionDao.getCountLikeHour;
     Fnavegador.HashsTags.clear;
     if lsthastags.ItemCount = 0 then
-      raise exception.Create('Nehuma hashtag  foi definida');
+    begin
+      tabmaster.ActiveTab := tabconfig;
+      tabcontrolconfig.ActiveTab := tabrashtags;
+      raise exception.Create
+        ('Nehuma hashtag  foi definida,adicione uma ou mais hashtags ');
+
+    end;
     if lstcomentarios.ItemCount = 0 then
-      raise exception.Create('Nehum comentario foi definido');
+    begin
+      tabmaster.ActiveTab := tabconfig;
+      tabcontrolconfig.ActiveTab := tabcomentarios;
+      raise exception.Create
+        ('Nehum comentario foi definido,adicione um ou mais comentario');
+    end;
     if GlobalPerson.person.person_insta_user = '' then
-      raise exception.Create(' O usuário não foi definido ');
+    begin
+      if not assigned(FviewPerson) then
+        FviewPerson := TFviewPerson.Create(Nil);
+      FviewPerson.tpOperacao := 0;
+      FviewPerson.Show;
+      try
+        FviewPerson.edtcontainsta.SetFocus;
+      except
+      end;
+      raise exception.Create(' O usuário instagram não foi definido ');
+    end;
     if GlobalPerson.person.person_insta_password = '' then
-      raise exception.Create('A senha para o instagram não informada ');
+    begin
+      if not assigned(FviewPerson) then
+        FviewPerson := TFviewPerson.Create(Nil);
+      FviewPerson.tpOperacao := 0;
+      FviewPerson.Show;
+      try
+        FviewPerson.edtsenhainsta.SetFocus;
+      except
+      end;
+      raise exception.Create('A senha para a conta instagram não informada ');
+    end;
+
     olocaloption := TLocalOptionController.Create;
     if olocaloption.localoption.Maxinthour < 1 then
+    begin
+      tabmaster.ActiveTab := tabconfig;
+      tabcontrolconfig.ActiveTab := tabconfigmain;
+      try
+        edtmaxinthour.SetFocus;
+      except
+      end;
       raise exception.Create('Maximo de interações menor que 1');
+    end;
 
     if i >= olocaloption.localoption.Maxinthour then
+    begin
+      tabmaster.ActiveTab := tabconfig;
+      tabcontrolconfig.ActiveTab := tabconfigmain;
+      try
+        edtmaxinthour.SetFocus;
+      except
+      end;
       raise exception.Create('Maximo de interações na ultima hora atingido');
+    end;
 
     for i := 0 to lsthastags.ItemCount - 1 do
     begin
@@ -548,6 +598,8 @@ begin
       Fnavegador.Comentarios.add(TListViewItem(lstcomentarios.Items[i]).Text);
     end;
     AniIndicator1.Enabled := True;
+    brs.Visible := True;
+    brs.Enabled:=false;
     Fnavegador.user := GlobalPerson.person.person_insta_user;
     FmainController.sincronizeusers;
     Fnavegador.Password := GlobalPerson.person.person_insta_password;
@@ -556,7 +608,7 @@ begin
     btnavigate.Enabled := false;
     btnavigate.ImageIndex := 7;
     btstop.ImageIndex := 13;
-    Label9.Text := 'Procesando navegação...';
+    lblinteracao.Text := 'não toque no navegador.';
     TmLabel.Enabled := True;
   except
     on e: exception do
@@ -568,7 +620,8 @@ begin
       btnavigate.Enabled := True;
       aninbrowser.Visible := false;
       aninbrowser.Enabled := false;
-      Label9.Text := 'Inativo';
+      brs.Visible := false;
+      lblinteracao.Text := 'Inativo';
     end;
   end;
 end;
@@ -649,7 +702,7 @@ begin
     memoeditcoments.Lines.Text := lstcomentarios.Items[ItemIndex].Text;
     lbtopcoments.Text := 'visualizando comentario : ' +
       inttostr(lstcomentarios.Items[ItemIndex].Tag);
-    memoeditcoments.ReadOnly:=true;
+    memoeditcoments.ReadOnly := True;
     btsalvarcomentario.Visible := false;
   end;
 end;
@@ -743,6 +796,11 @@ begin
 
 end;
 
+procedure Tfmain.lblversionClick(Sender: TObject);
+begin
+  tablog.Visible:=true;
+end;
+
 procedure Tfmain.licomentariosClick(Sender: TObject);
 begin
   FmainController.setViewComment(Sender);
@@ -767,7 +825,6 @@ end;
 procedure Tfmain.linomecontaClick(Sender: TObject);
 begin
   if not assigned(FviewPerson) then
-
     FviewPerson := TFviewPerson.Create(Nil);
   FviewPerson.tpOperacao := 0;
   FviewPerson.Show;
@@ -860,10 +917,10 @@ end;
 
 procedure Tfmain.TmLabelTimer(Sender: TObject);
 begin
-  if Label9.Visible = True then
-    Label9.Visible := false
+  if lblinteracao.Visible = True then
+    lblinteracao.Visible := false
   else
-    Label9.Visible := True;
+   lblinteracao.Visible := True;
 end;
 
 procedure Tfmain.tm_cordsTimer(Sender: TObject);
@@ -915,7 +972,7 @@ begin
     brs.SendToBack;
     brs.Align := TAlignLayout.client;
     brs.CanFocus := false;
-    brs.Visible := True;
+    brs.Visible :=false;
     Fnavegador := TinstaNavegador.Create(brs, memolog);
     if not assigned(dm_local) then
       dm_local := Tdm_local.Create(Application);
@@ -948,7 +1005,6 @@ begin
     op := 6;
     NgDeviceInfo.updateDeviceInfo();
     op := 7;
-    brs.Visible := True;
     op := 8;
     brs.SendToBack;
     AniIndicator1.BringToFront;

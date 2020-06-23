@@ -31,7 +31,7 @@ Type
     function setDataToserver(out amsg: string; update: Boolean = false)
       : Boolean;
 
-    procedure updateLocationInfo();
+    procedure updateLocationInfo(callback:TNotifyEvent =Nil);
     procedure getLocalPerson;
     procedure sincronizar();
     procedure serialize(value: string);
@@ -116,7 +116,7 @@ begin
   end;
 end;
 
-procedure TpersonController.updateLocationInfo;
+procedure TpersonController.updateLocationInfo(callback:TNotifyEvent =Nil);
 var
   ojson: TJSONObject;
 
@@ -137,10 +137,18 @@ Begin
       ithd.Url := _rest_url_person;
       ithd.Param := ojson.ToString;
       ithd.Verb := 1;
+      ithd.OnTerminate:=callback;
       ithd.FreeOnTerminate := true;
       ithd.resume;
     end;
   except
+    on e:exception do
+    begin
+      Tutil.gravalog('[TPERSON] E147 '+E.Message)  ;
+      if Assigned(callback) then
+        callback(nil)
+
+    end;
   end;
 end;
 

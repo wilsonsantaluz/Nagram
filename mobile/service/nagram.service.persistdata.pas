@@ -153,7 +153,7 @@ begin
           begin
             myHttpCom.post(_rest_host + Furl, Req_Json, aresponse);
             setresponse();
-            Fsucess := true;
+            Fsucess := pos('codretorno":"200"', Fresponse) > 0;
           end;
         2:
           begin

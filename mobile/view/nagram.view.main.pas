@@ -8,6 +8,7 @@ uses
   System.Types,
   FMX.ListView.Types,
   nagram.view.releasenotes,
+  nagram.android.util,
 
   FMX.ListView.Appearances,
   FMX.ListView.Adapters.Base,
@@ -58,6 +59,7 @@ uses
   Androidapi.JNI.Widget,
   FMX.Helpers.android,
   FMX.ZOrder.android,
+  nagram.service.geolocation,
   FMX.Platform.android,
 
   FMX.FontGlyphs.android,
@@ -177,26 +179,13 @@ type
     btrefreshtags: TSpeedButton;
     btatualizarcomentarios: TSpeedButton;
     btoptions: TSpeedButton;
-    pnexec: TCalloutPanel;
-    swepnexec: TShadowEffect;
-    lbexec: TLabel;
-    osensor: TLocationSensor;
+    pnexec: TRectangle;
     ColorAnimation1: TColorAnimation;
     ccopanel: TColorAnimation;
-    rectpnexec: TRectangle;
     FloatAnimation1: TFloatAnimation;
-    OverflowMenu: TListBox;
-    liupdatedata: TListBoxItem;
-    liespace: TListBoxItem;
-    lilogout: TListBoxItem;
-    sweoverflowmenu: TShadowEffect;
     Label2: TLabel;
     Lang1: TLang;
-    efcoverflowmenu: TFloatAnimation;
-    ListBoxItem1: TListBoxItem;
     mainthema: TStyleBook;
-    ListBoxItem3: TListBoxItem;
-    Image2: TImage;
     layoutmaster: TLayout;
     recBody: TRectangle;
     rectarquee: TRectangle;
@@ -210,6 +199,17 @@ type
     Label3: TLabel;
     edtmaxinthour: TEdit;
     lblversion: TLabel;
+    lbexec: TLabel;
+    MultiView1: TMultiView;
+    OverflowMenu: TListBox;
+    ListBoxItem3: TListBoxItem;
+    Image2: TImage;
+    lilogout: TListBoxItem;
+    liespace: TListBoxItem;
+    ListBoxItem1: TListBoxItem;
+    sweoverflowmenu: TShadowEffect;
+    efcoverflowmenu: TFloatAnimation;
+    Label4: TLabel;
     procedure btnavigateClick(Sender: TObject);
     procedure btstopClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -255,26 +255,24 @@ type
     procedure btatualizarcomentariosClick(Sender: TObject);
     procedure btrefreshactionsClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var action: TCloseAction);
-    procedure btoptionsClick(Sender: TObject);
     procedure lilogoutClick(Sender: TObject);
     procedure liupdateallClick(Sender: TObject);
-    procedure osensorLocationChanged(Sender: TObject;
-      const OldLocation, NewLocation: TLocationCoord2D);
     procedure liupdatedataClick(Sender: TObject);
     procedure lstcomentariosItemClickEx(const Sender: TObject;
       ItemIndex: Integer; const LocalClickPos: TPointF;
       const ItemObject: TListItemDrawable);
     procedure btoptionsMouseEnter(Sender: TObject);
-    procedure OverflowMenuClick(Sender: TObject);
     procedure ListBoxItem1Click(Sender: TObject);
     procedure bt_updatecommentClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure tabconfigClick(Sender: TObject);
     procedure liespaceClick(Sender: TObject);
+    procedure MultiView1StartShowing(Sender: TObject);
+    procedure MultiView1StartHiding(Sender: TObject);
 
   private
     { Private declarations }
-    FGeocoder: TGeocoder;
+
     FcommentId: Integer;
     FHashTagId: Integer;
 {$IF DEFINED(MSWINDOWS_)}
@@ -283,7 +281,7 @@ type
     brs: TWebBrowser;
 {$ENDIF}
     Fnavegador: TinstaNavegador;
-
+    procedure afterUpdateLocation(Sender: TObject);
     procedure OnInputQuery_Close(const AResult: TModalResult;
       const AValues: array of string);
 
@@ -378,7 +376,9 @@ begin
     except
       on e: exception do
       begin
-        ShowMessage('Erro ao exclur hashtag ' + e.Message);
+        tutil.gravalog('[TVIEWMAIN 382]' + e.Message);
+        ShowMessage('Erro ao exclur hashtag ');
+
       end;
     end;
   end;
@@ -393,7 +393,9 @@ end;
 { ------------------------------------------------------------------------------ }
 procedure Tfmain.btsalvarcomentarioClick(Sender: TObject);
 begin
-  FmainController.saveComent();
+  if True then
+
+    FmainController.saveComent();
   btbackeditcomentarioClick(Sender);
   FmainController.setViewComment(nil);
 
@@ -409,13 +411,13 @@ begin
   Fnavegador.stopall;
   AniIndicator1.Enabled := false;
   AniIndicator1.Visible := false;
-  btnavigate.Enabled := true;
+  btnavigate.Enabled := True;
   btstop.Enabled := false;
   Label9.Text := 'Processo interompido.';
   TmLabel.Enabled := false;
   btnavigate.ImageIndex := 12;
   btstop.ImageIndex := 6;
-  Label9.Visible := true;
+  Label9.Visible := True;
   aninbrowser.Visible := false;
   aninbrowser.Enabled := false;
 end;
@@ -437,6 +439,12 @@ begin
 end;
 
 { ------------------------------------------------------------------------------ }
+procedure Tfmain.afterUpdateLocation(Sender: TObject);
+begin
+  lblcords.Text := 'atualizado...'
+
+end;
+
 procedure Tfmain.btaba1Click(Sender: TObject);
 begin
   tabmaster.ActiveTab := taboperacao;
@@ -447,6 +455,9 @@ begin
   ChangeTabAction5.ExecuteTarget(Sender);
   memoeditcoments.Lines.clear;
   FcommentId := 0;
+  lbtopcoments.Text := 'Inserindo comentario';
+  btsalvarcomentario.Visible := True;
+  memoeditcoments.ReadOnly := false;
 
 end;
 
@@ -490,7 +501,8 @@ begin
       FcommentId := -1;
     except
       on e: exception do
-        ShowMessage(e.Message);
+        tutil.gravalog('[TVIEWMAIN 504]' + e.Message);
+
     end;
   end
   else
@@ -504,30 +516,28 @@ var
   olocaloption: TLocalOptionController;
 begin
   try
-    AniIndicator1.Visible := true;
-    AniIndicator1.Enabled := true;
-    aninbrowser.Visible := true;
-    aninbrowser.Enabled := true;
+    AniIndicator1.Visible := True;
+    AniIndicator1.Enabled := True;
+    aninbrowser.Visible := True;
+    aninbrowser.Enabled := True;
     aninbrowser.BringToFront;
     LogOut;
     i := TActionDao.getCountLikeHour;
     Fnavegador.HashsTags.clear;
     if lsthastags.ItemCount = 0 then
-      raise exception.Create('[Erro 236 ] Nehuma hashtag  foi definida');
+      raise exception.Create('Nehuma hashtag  foi definida');
     if lstcomentarios.ItemCount = 0 then
-      raise exception.Create('[Erro 238] Nehum comentario foi definido');
+      raise exception.Create('Nehum comentario foi definido');
     if GlobalPerson.person.person_insta_user = '' then
-      raise exception.Create('[Erro]  O usuário não foi definido ');
+      raise exception.Create(' O usuário não foi definido ');
     if GlobalPerson.person.person_insta_password = '' then
-      raise exception.Create
-        ('[Erro 242] a senha para o instagram não informada ');
+      raise exception.Create('A senha para o instagram não informada ');
     olocaloption := TLocalOptionController.Create;
     if olocaloption.localoption.Maxinthour < 1 then
-      raise exception.Create('[Erro 521] Maximo de interações menor que 1');
+      raise exception.Create('Maximo de interações menor que 1');
 
     if i >= olocaloption.localoption.Maxinthour then
-      raise exception.Create
-        ('[Erro 521] Maximo de interações na ultima hora atingido');
+      raise exception.Create('Maximo de interações na ultima hora atingido');
 
     for i := 0 to lsthastags.ItemCount - 1 do
     begin
@@ -537,41 +547,29 @@ begin
     begin
       Fnavegador.Comentarios.add(TListViewItem(lstcomentarios.Items[i]).Text);
     end;
-    AniIndicator1.Enabled := true;
+    AniIndicator1.Enabled := True;
     Fnavegador.user := GlobalPerson.person.person_insta_user;
     FmainController.sincronizeusers;
     Fnavegador.Password := GlobalPerson.person.person_insta_password;
     Fnavegador.startSpan();
-    btstop.Enabled := true;
+    btstop.Enabled := True;
     btnavigate.Enabled := false;
     btnavigate.ImageIndex := 7;
     btstop.ImageIndex := 13;
     Label9.Text := 'Procesando navegação...';
-    TmLabel.Enabled := true;
+    TmLabel.Enabled := True;
   except
     on e: exception do
     begin
-      ShowMessage('Lamento não pude iniciar ' + e.Message);
+      ShowMessage('Lamento não pude iniciar  ' + e.Message);
       AniIndicator1.Enabled := false;
       AniIndicator1.Visible := false;
       btstop.Enabled := false;
-      btnavigate.Enabled := true;
+      btnavigate.Enabled := True;
       aninbrowser.Visible := false;
       aninbrowser.Enabled := false;
       Label9.Text := 'Inativo';
     end;
-  end;
-end;
-
-procedure Tfmain.btoptionsClick(Sender: TObject);
-begin
-  OverflowMenu.Visible := not OverflowMenu.Visible;
-  brs.Visible := not OverflowMenu.Visible;
-  OverflowMenu.BringToFront;
-  if OverflowMenu.Visible then
-  begin
-    OverflowMenu.ApplyStyleLookup;
-    OverflowMenu.RealignContent;
   end;
 end;
 
@@ -589,15 +587,14 @@ end;
 procedure Tfmain.FormCreate(Sender: TObject);
 begin
   try
-    tm_iniciar.Enabled := true;
+    tm_iniciar.Enabled := True;
     FmainController.FormView := Self;
-    OverflowMenu.Visible := false;
-    OverflowMenu.Position.X := 5;
-    OverflowMenu.Position.Y := 37;
+
     tabmaster.ActiveTab := taboperacao;
     tabcontrolcomentarios.ActiveTab := tabsubcomentariosview;
     btremovertag.Visible := false;
     btdeletecoment.Visible := false;
+    MultiView1.Mode := TMultiViewMode(3);
     setBrowserControl();
     aninbrowser.Visible := false;
     aninbrowser.Enabled := false;
@@ -608,7 +605,9 @@ begin
 
   except
     on e: exception do
-      ShowMessage('[E548]' + e.Message);
+    begin
+      tutil.gravalog('[TVIEWMAIN 548]' + e.Message);
+    end;
   end;
 end;
 
@@ -648,6 +647,10 @@ begin
   begin
     ChangeTabAction5.ExecuteTarget(Sender);
     memoeditcoments.Lines.Text := lstcomentarios.Items[ItemIndex].Text;
+    lbtopcoments.Text := 'visualizando comentario : ' +
+      inttostr(lstcomentarios.Items[ItemIndex].Tag);
+    memoeditcoments.ReadOnly:=true;
+    btsalvarcomentario.Visible := false;
   end;
 end;
 
@@ -689,6 +692,16 @@ begin
     FUserView.id := AItem.Tag;
     FUserView.Show;
   end;
+end;
+
+procedure Tfmain.MultiView1StartHiding(Sender: TObject);
+begin
+  brs.Visible := True;
+end;
+
+procedure Tfmain.MultiView1StartShowing(Sender: TObject);
+begin
+  brs.Visible := false;
 end;
 
 procedure Tfmain.ListBoxItem1Click(Sender: TObject);
@@ -800,41 +813,9 @@ begin
     on e: exception do
     begin
       ShowMessage(e.Message);
+      tutil.gravalog('[TVIEWMAIN 814]' + e.Message);
     end;
   end;
-end;
-
-procedure Tfmain.osensorLocationChanged(Sender: TObject;
-  const OldLocation, NewLocation: TLocationCoord2D);
-begin
-  try
-
-    GlobalPerson.atualLongitude := NewLocation.Longitude;
-    GlobalPerson.atualLatitude := NewLocation.Latitude;
-
-    try
-      if not assigned(FGeocoder) then
-      begin
-        if assigned(TGeocoder.Current) then
-          FGeocoder := TGeocoder.Current.Create;
-        if assigned(FGeocoder) then
-          FGeocoder.OnGeocodeReverse := OnGeocodeReverseEvent;
-      end;
-    except
-
-    end;
-
-    if assigned(FGeocoder) and not FGeocoder.Geocoding then
-      FGeocoder.GeocodeReverse(NewLocation);
-
-  except
-
-  end;
-end;
-
-procedure Tfmain.OverflowMenuClick(Sender: TObject);
-begin
-  OverflowMenu.Visible := false;
 end;
 
 procedure Tfmain.btbackeditcomentarioClick(Sender: TObject);
@@ -856,7 +837,7 @@ end;
 
 procedure Tfmain.Button1Click(Sender: TObject);
 begin
-  pnexec.Visible := true;
+  pnexec.Visible := True;
   lbexec.Text := 'Comentario salvo';
   flapnexec.Start;
 end;
@@ -879,10 +860,10 @@ end;
 
 procedure Tfmain.TmLabelTimer(Sender: TObject);
 begin
-  if Label9.Visible = true then
+  if Label9.Visible = True then
     Label9.Visible := false
   else
-    Label9.Visible := true;
+    Label9.Visible := True;
 end;
 
 procedure Tfmain.tm_cordsTimer(Sender: TObject);
@@ -892,14 +873,15 @@ begin
     tm_cords.Enabled := false;
     GlobalPerson.person.person_last_latitude := GlobalPerson.atualLatitude;
     GlobalPerson.person.person_last_longitude := GlobalPerson.atualLongitude;
-    GlobalPerson.updateLocationInfo;
+    GlobalPerson.updateLocationInfo(afterUpdateLocation);
+
   except
     on e: exception do
     begin
       lblcords.Text := e.Message;
     end;
   end;
-  tm_cords.Enabled := true;
+  tm_cords.Enabled := True;
 
 end;
 
@@ -908,11 +890,8 @@ begin
   lbexec.Text := 'Carregando açoes...';
   FmainController.sincronizeactions;
   lbexec.Text := 'Carregando usuarios...';
-  Self.Updated;
   FmainController.sincronizeusers;
   lbexec.Text := 'Carregando comentarios...';
-
-  Self.Updated;
   FmainController.sincronizecomments;
   lbexec.Text := 'Carregando hashtags...';
   FmainController.sincronizehashtags;
@@ -936,41 +915,51 @@ begin
     brs.SendToBack;
     brs.Align := TAlignLayout.client;
     brs.CanFocus := false;
-    brs.Visible := true;
+    brs.Visible := True;
     Fnavegador := TinstaNavegador.Create(brs, memolog);
     if not assigned(dm_local) then
       dm_local := Tdm_local.Create(Application);
-    brs.Navigate('https://www.instagram.com/');
+    // brs.Navigate('https://www.instagram.com/');
   except
     on e: exception do
-      ShowMessage('[E842] ' + e.Message);
+      tutil.gravalog('[TVIEWMAIN 951]' + e.Message);
   end;
 end;
 
 procedure Tfmain.tm_iniciarTimer(Sender: TObject);
 var
   amsg: string;
+  op: Integer;
 begin
   try
+    op := 0;
     tm_iniciar.Enabled := false;
+    op := 1;
     GlobalPerson.setLocalPerson(nil);
-    GlobalPerson.setDataToserver(amsg, true);
-    AniIndicator1.Enabled := true;
-    pnexec.Visible := true;
+    op := 2;
+    GlobalPerson.setDataToserver(amsg, True);
+    op := 3;
+    AniIndicator1.Enabled := True;
+    pnexec.Visible := True;
+    op := 4;
     prepareview();
-    Self.Updated;
-    tm_cords.Enabled := true;
-    osensor.Active := true;
-    Self.Updated;
+    op := 5;
     GlobalPerson.sincronizar;
+    op := 6;
     NgDeviceInfo.updateDeviceInfo();
-    brs.Visible := true;
+    op := 7;
+    brs.Visible := True;
+    op := 8;
     brs.SendToBack;
     AniIndicator1.BringToFront;
     lbinfouser.Text := 'Bem vindo ' + GlobalPerson.person.person_name;
+    op := 9;
+    tm_cords.Enabled := True;
+    op := 10;
+
   Except
     on e: exception do
-      ShowMessage('[E868] ' + e.Message + '  ' + amsg);
+      tutil.gravalog('[VIEWMAIN ] E979 ' + e.Message + ' - ' + inttostr(op));
   end;
 end;
 

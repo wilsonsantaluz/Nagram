@@ -43,6 +43,7 @@ type
     function deleteComment(value: integer): string;
     function getcountitens: integer;
     procedure replaceComments(values: TComments);
+    procedure getcomentById(var comment: TComment);
   end;
 
 implementation
@@ -76,7 +77,8 @@ begin
       Tutil.gravalog('[TDAOCOMMENTS-E76]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 procedure TCommentDao.replaceComments(values: TComments);
 var
   qry: TFDQuery;
@@ -86,7 +88,7 @@ var
   sep: string;
 begin
   try
-    if values.Count > 0  then
+    if values.Count > 0 then
     begin
       qry := TFDQuery.Create(nil);
       qry.Connection := dm_local.FDConnection1;
@@ -140,7 +142,8 @@ begin
       Tutil.gravalog('[TDAOCOMMENTS-E139]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 function TCommentDao.deleteComment(value: integer): string;
 var
   qry: TFDQuery;
@@ -186,6 +189,42 @@ begin
   end;
 end;
 
+procedure TCommentDao.getcomentById(var comment: TComment);
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.Create(nil);
+    qry.Connection := dm_local.FDConnection1;
+
+    try
+      qry.SQL.Add('SELECT   * FROM   insta_comments');
+      qry.SQL.Add('WHERE ');
+      qry.SQL.Add('  insta_comment_person_uuid = ' +
+        QuotedStr(GlobalPerson.person.person_uuid));
+      qry.SQL.Add('  AND  insta_comment_id = ' +
+        inttostr(comment.insta_comment_id));
+      qry.open;
+
+      comment.insta_comment_id := qry.FieldByName('insta_comment_id').AsInteger;
+      comment.insta_comment_uuid :=
+        qry.FieldByName('insta_comment_uuid').AsString;
+      comment.insta_comment_person_uuid :=
+        qry.FieldByName('insta_comment_person_uuid').AsString;
+      comment.insta_comment_Date := qry.FieldByName('insta_comment_date').value;
+      comment.insta_comment_Text := qry.FieldByName('insta_comment_text').value;
+
+    finally
+      qry.Close;
+      FreeAndNil(qry);
+    end;
+  Except
+    on e: exception do
+      Tutil.gravalog('[TDAOCOMMENTS-E220] ' + e.message);
+  end;
+
+end;
+
 function TCommentDao.getComment(value: integer): TComment;
 var
   qry: TFDQuery;
@@ -197,12 +236,12 @@ begin
     try
       qry.SQL.Add('SELECT   * FROM   insta_comments');
       qry.SQL.Add('WHERE ');
-      qry.SQL.Add('  insta_comment_person_uuid ' +
+      qry.SQL.Add('  insta_comment_person_uuid  =' +
         QuotedStr(GlobalPerson.person.person_uuid));
       qry.SQL.Add('  AND  insta_comment_id = ' + inttostr(value));
       qry.open;
       result := TComment.Create;
-      result.insta_comment_Id := qry.FieldByName('insta_comment_id').AsInteger;
+      result.insta_comment_id := qry.FieldByName('insta_comment_id').AsInteger;
       result.insta_comment_uuid :=
         qry.FieldByName('insta_comment_uuid').AsString;
       result.insta_comment_person_uuid :=
@@ -219,7 +258,8 @@ begin
       Tutil.gravalog('[TDAOCOMMENTS-E217]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 function TCommentDao.getComments(criterio: string): TComments;
 var
   qry: TFDQuery;
@@ -244,18 +284,18 @@ begin
       qry.open;
       qry.Last;
       qry.First;
-     result:=TObjectList<Tcomment>.Create;
+      result := TObjectList<TComment>.Create;
       while not qry.Eof do
       begin
         tmp := TComment.Create;
-        tmp.insta_comment_Id := qry.FieldByName('insta_comment_id').AsInteger;
+        tmp.insta_comment_id := qry.FieldByName('insta_comment_id').AsInteger;
         tmp.insta_comment_uuid := qry.FieldByName('insta_comment_uuid')
           .AsString;
         tmp.insta_comment_person_uuid :=
           qry.FieldByName('insta_comment_person_uuid').AsString;
         tmp.insta_comment_Date := qry.FieldByName('insta_comment_date').value;
         tmp.insta_comment_Text := qry.FieldByName('insta_comment_text').value;
-        result.add( tmp);
+        result.Add(tmp);
 
         qry.Next;
       end;
@@ -269,36 +309,52 @@ begin
       Tutil.gravalog('[TDAOCOMMENTS-E268]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 procedure TCommentDao.setComment(var value: TComment);
 var
   qry: TFDQuery;
+  valdata: TDateTime;
 begin
   try
+    valdata := value.insta_comment_Date;
+    if valdata < 100 then
+      valdata := now;
     qry := TFDQuery.Create(nil);
     qry.Connection := dm_local.FDConnection1;
     try
-      if value.insta_comment_Id = 0 then
+      qry.SQL.Add('SELECT  *  FROM insta_comments');
+      qry.SQL.Add('WHERE ');
+      if value.insta_comment_id > 0 then
       begin
-        qry.SQL.Add('SELECT  insta_comment_id   FROM insta_comments');
-        qry.SQL.Add('WHERE ');
+        qry.SQL.Add('insta_comment_id   = ' +
+        inttostr(  value.insta_comment_id));
+      end
+      else
+      begin
         qry.SQL.Add(' ( insta_comment_text   = ' +
           QuotedStr(value.insta_comment_Text));
-
         qry.SQL.Add(' OR  insta_comment_uuid =' +
           QuotedStr(value.insta_comment_uuid));
         qry.SQL.Add(' )');
         qry.SQL.Add(' and  insta_comment_person_uuid  = ' +
           QuotedStr(GlobalPerson.person.person_uuid));
-        qry.open;
-        if qry.RecordCount > 0 then
-        begin
-          value.insta_comment_Id := qry.FieldByName('insta_comment_id')
-            .AsInteger;
-        end;
       end;
+      qry.open;
+      if qry.RecordCount > 0 then
+      begin
+        value.insta_comment_id := qry.FieldByName('insta_comment_id').AsInteger;
+        value.insta_comment_uuid :=
+          qry.FieldByName('insta_comment_uuid').AsString;
+        value.insta_comment_Date := qry.FieldByName('insta_comment_date')
+          .AsDateTime;
+        value.insta_comment_person_uuid :=
+          qry.FieldByName('insta_comment_person_uuid').AsString;
+
+      end;
+
       qry.Close;
-      if value.insta_comment_Id = 0 then
+      if value.insta_comment_id = 0 then
       begin
         qry.SQL.Clear;
         qry.SQL.Add('INSERT INTO insta_comments');
@@ -314,8 +370,8 @@ begin
         qry.SQL.Add('   ' + QuotedStr(value.insta_comment_Text));
         qry.SQL.Add('  ,' + QuotedStr(value.insta_comment_uuid));
         qry.SQL.Add('  ,' + QuotedStr(GlobalPerson.person.person_uuid));
-        qry.SQL.Add('  ,' + StringReplace(FloatToStr(value.insta_comment_Date),
-          ',', '.', [rfReplaceAll]));
+        qry.SQL.Add('  ,' + StringReplace(FloatToStr(now), ',', '.',
+          [rfReplaceAll]));
 
         qry.SQL.Add(' );');
         qry.ExecSQL;
@@ -327,7 +383,7 @@ begin
         qry.SQL.Add('  and insta_comment_person_uuid = ' +
           QuotedStr(GlobalPerson.person.person_uuid));
         qry.open;
-        value.insta_comment_Id := qry.FieldByName('insta_comment_id').AsInteger;
+        value.insta_comment_id := qry.FieldByName('insta_comment_id').AsInteger;
         qry.Close;
         qry.SQL.Clear;
 
@@ -339,8 +395,8 @@ begin
         qry.SQL.Add('SET ');
 
         qry.SQL.Add('  insta_comment_date =' +
-          StringReplace(FloatToStr(value.insta_comment_Date), ',', '.',
-          [rfReplaceAll]));
+          StringReplace(FloatToStr(valdata), ',', '.', [rfReplaceAll]));
+
         if value.insta_comment_Text <> '' then
           qry.SQL.Add(' ,insta_comment_text = ' +
             QuotedStr(value.insta_comment_Text));
@@ -350,7 +406,7 @@ begin
             QuotedStr(value.insta_comment_uuid));
 
         qry.SQL.Add('WHERE   ');
-        qry.SQL.Add('  insta_comment_id = ' + inttostr(value.insta_comment_Id));
+        qry.SQL.Add('  insta_comment_id = ' + inttostr(value.insta_comment_id));
         qry.ExecSQL;
       end;
     finally
@@ -361,5 +417,6 @@ begin
       Tutil.gravalog('[TDAOCOMMENTS-E359]' + e.message);
   end;
 end;
-{-----------------------------------------------------------------------------}
+
+{ ----------------------------------------------------------------------------- }
 end.

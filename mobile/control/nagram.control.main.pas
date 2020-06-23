@@ -47,7 +47,7 @@ type
     FHashTagController: THashTagController;
     procedure dochangeoperacional(Sender: TObject);
     function getActionById(value: integer): TBotAction;
-    function getUserById(value: integer): Tuser;
+
 
   public
     procedure sincronizeall();
@@ -167,11 +167,6 @@ begin
   end;
 end;
 
-function TMainController.getUserById(value: integer): Tuser;
-begin
-
-end;
-
 procedure TMainController.persistLocalOptions;
 
   function valint(value: string): integer;
@@ -199,7 +194,7 @@ begin
     Flocaloption.localoption.HashTagDept :=
       valint(((FFormView) as Tfmain).edtpesquisashashtag.Text);
 
-    Flocaloption.localoption.Maxinthour  :=
+    Flocaloption.localoption.Maxinthour :=
       valint(((FFormView) as Tfmain).edtmaxinthour.Text);
 
     Flocaloption.localoption.DelayNavigation :=
@@ -246,7 +241,7 @@ end;
 { ----------------------------------------------------------------------------- }
 procedure TMainController.saveComent;
 var
-  ocomment: TComment;
+  ocomment: tcomment;
   ocomments: TComments;
 begin
   try
@@ -254,15 +249,18 @@ begin
     begin
       if (memoeditcoments.Text <> '') then
       begin
-        ocomment := TComment.create;
+        ocomment := tcomment.create;
 
         ocomment.insta_comment_Text := memoeditcoments.Text;
         ocomment.insta_comment_Id := CommentId;
         FCommentController.setComment(ocomment);
-        ocomments := TObjectList<TComment>.create;
+        ocomments := TObjectList<tcomment>.create;
         ocomments.Add(ocomment);
         if CommentId > 0 then
+        begin
+
           FCommentController.setDataToserver(ocomments, true)
+        end
         else
           FCommentController.setDataToserver(ocomments);
       end;
@@ -495,7 +493,7 @@ begin
       inttostr(Flocaloption.localoption.DaysUnfolow);
 
     ((FFormView) as Tfmain).edtmaxinthour.Text :=
-      inttostr(Flocaloption.localoption.maxinthour);
+      inttostr(Flocaloption.localoption.Maxinthour);
 
     ((FFormView) as Tfmain).edtpesquisashashtag.Text :=
       inttostr(Flocaloption.localoption.HashTagDept);

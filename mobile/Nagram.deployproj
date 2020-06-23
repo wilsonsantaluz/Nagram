@@ -48,18 +48,18 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="fonts\Roboto-Regular.ttf" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="fonts\Roboto-Italic.ttf" Condition="'$(Config)'=='Debug'">
             <RemoteDir>Nagram\</RemoteDir>
-            <RemoteName>Roboto-Regular.ttf</RemoteName>
+            <RemoteName>Roboto-Italic.ttf</RemoteName>
             <DeployClass>ProjectFile</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="fonts\Roboto-Italic.ttf" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="fonts\Roboto-Regular.ttf" Condition="'$(Config)'=='Debug'">
             <RemoteDir>Nagram\</RemoteDir>
-            <RemoteName>Roboto-Italic.ttf</RemoteName>
+            <RemoteName>Roboto-Regular.ttf</RemoteName>
             <DeployClass>ProjectFile</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>

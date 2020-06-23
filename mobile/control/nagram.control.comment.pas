@@ -34,9 +34,12 @@ Type
     function getcomments(criterio: string): TComments;
     procedure deleteCommentServer(value: string);
     procedure sincronize;
+    procedure getcomentById(var comment: Tcomment);
     property onupdate: TmpUpdate read Fonupdate write Fonupdate;
     property initialLoad: Boolean read FinitialLoad write FinitialLoad;
   end;
+
+
 
 implementation
 
@@ -93,6 +96,25 @@ Begin
 end;
 
 { ------------------------------------------------------------------------------ }
+procedure TcommentController.getcomentById(var comment: Tcomment);
+var
+  odao: TcommentDao;
+begin
+  try
+    odao := TcommentDao.create();
+    Try
+      odao.getcomentById(comment);
+    Finally
+      freeandNil(odao)
+    End;
+  except
+    on e: exception do
+      Tutil.gravalog('[TCOMMENTS-E109]' + e.message);
+
+  end;
+
+end;
+
 function TcommentController.getcomments(criterio: string): TComments;
 var
   odao: TcommentDao;
@@ -162,7 +184,6 @@ var
   jsv: TJSONValue;
   sjson: string;
   i: integer;
-  icomment: Tcomment;
   sep: string;
   Fputdata: TPersistData;
 Begin
@@ -172,9 +193,9 @@ Begin
 
     for i := 0 to value.Count - 1 do
     begin
-      icomment := value[i];
-      icomment.insta_comment_person_uuid := GlobalPerson.person.person_uuid;
-      jsv := Tutil.classtojson(icomment, icomment.ClassInfo);
+
+      value[i].insta_comment_person_uuid := GlobalPerson.person.person_uuid;
+      jsv := Tutil.classtojson(value[i], value[i].ClassInfo);
       sjson := sjson + sep + jsv.ToString;
       sep := ',';
     end;
@@ -311,15 +332,14 @@ begin
         end;
       end;
     finally
-      if FinitialLoad then
+      if (FinitialLoad) and (putdata.sucess) then
       begin
         FinitialLoad := false;
         getDataFromServer;
       end;
-
       if Assigned(Focomments) then
         freeandNil(Focomments);
-      if Assigned(onupdate) then
+      if Assigned(onupdate) and (putdata.sucess) then
         onupdate(Nil);
     end;
 

@@ -45,7 +45,8 @@ uses
   IdSSLOpenSSLHeaders,
   IdSSLOpenSSL,
   nagram.view.sendfeedback in 'view\nagram.view.sendfeedback.pas' {FmailSend},
-  nagram.view.releasenotes in 'view\nagram.view.releasenotes.pas' {FreleaseNotes};
+  nagram.view.releasenotes in 'view\nagram.view.releasenotes.pas' {FreleaseNotes},
+  nagram.service.geolocation in 'service\nagram.service.geolocation.pas';
 
 {$R *.res}
 

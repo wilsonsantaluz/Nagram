@@ -111,7 +111,7 @@ var
 implementation
 
 uses
-
+  nagram.service.geolocation,
   nagram.model.person,
   nagram.lib.infoacount,
   nagram.control.person,
@@ -248,6 +248,11 @@ end;
 procedure TFlogin.FormCreate(Sender: TObject);
 begin
   tm_init.Enabled := true;
+  with  TlocationInfo.Create(true) do
+  begin
+    resume;
+
+  end;
 
 end;
 
